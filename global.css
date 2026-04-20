@@ -257,6 +257,11 @@ body {
   font-size: 0.85rem;
 }
 
+.about-text p {
+  text-align: justify;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 2;
+}
 
 /* =========================================
    6. STYLING SPESIFIK: HALAMAN KONTAK
