@@ -224,6 +224,12 @@ body {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); /* Ring biru tipis khas Shadcn */
 }
 
+.form-group textarea {
+  resize: vertical; /* Mengunci tarikan hanya untuk ke bawah/atas */
+  min-height: 120px; /* Batas tinggi minimal saat awal dirender */
+  max-height: 400px; /* Opsional: Batas maksimal ditarik agar tidak merusak halaman ke bawah */
+}
+
 /* =========================================
    FIX UNTUK DROPDOWN (SELECT & OPTION)
    ========================================= */
@@ -269,4 +275,44 @@ body {
   .contact-container {
     grid-template-columns: 1fr; 
   }
+}
+
+/* ========================================
+    Styling Card
+   ======================================== */
+
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 15px;
+  flex: 0 1 calc(30% - 20px);
+  display: flex;
+  flex-direction: column;
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+
+.card h3 {
+  margin: 10px 0 5px;
+}
+
+.card p {
+  margin: 3px 0;
+  color: gray;
+  font-size: 14px;
 }
