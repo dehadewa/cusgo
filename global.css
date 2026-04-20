@@ -1,5 +1,5 @@
 /* =========================================
-   Reset & Variabel Dasar
+   Reset & Variabel Dasar (Tema Minimalis ala Shadcn)
    ========================================= */
 * {
   margin: 0;
@@ -9,14 +9,20 @@
 }
 
 :root {
-  --primary-color: #2563eb; 
-  --text-dark: #1f2937;
-  --text-light: #6b7280;
+  /* Ubah primary jadi Slate/Dark Navy yang sangat elegan */
+  --primary-color: #0f172a; 
+  --primary-hover: #1e293b;
+  --accent-color: #3b82f6; /* Biru terang hanya untuk aksen kecil/glow */
+  --text-dark: #0f172a;
+  --text-light: #64748b;
   --bg-white: #ffffff;
+  --bg-page: #f3f4f6; /* Abu-abu terang agar kartu putihnya menonjol */
+  --border-color: #e2e8f0;
 }
 
 body {
-  background-color: #f9fafb;
+  background-color: var(--bg-page);
+  color: var(--text-dark);
 }
 
 /* =========================================
@@ -24,17 +30,17 @@ body {
    ========================================= */
 .navbar {
   display: flex; 
-  justify-content: space-between; /* Mendorong menu mentok ke kanan karena tombol sewa dihapus */
+  justify-content: space-between; 
   align-items: center; 
   background-color: var(--bg-white);
   padding: 1.2rem 5%; 
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Bayangan navbar lebih halus */
   position: sticky;
   top: 0;
   z-index: 1000;
+  border-bottom: 1px solid var(--border-color);
 }
 
-/* Styling Logo */
 .logo a {
   font-size: 1.5rem;
   font-weight: 800;
@@ -44,47 +50,269 @@ body {
 }
 
 .logo span {
-  color: var(--primary-color);
+  color: var(--accent-color); /* Titik logo pakai warna aksen biru */
 }
 
-/* Styling Menu Links */
 .nav-links ul {
   list-style: none;
   display: flex; 
   gap: 2.5rem; 
 }
 
-/* =========================================
-  Animasi Garis Bawah Estetik (Hover Effect)
-  ========================================= 
-*/
 .nav-links a {
   text-decoration: none;
   color: var(--text-light);
   font-weight: 500;
   font-size: 0.95rem;
   transition: color 0.3s ease;
-  position: relative; /* Wajib diatur relative agar garis bawah menempel di bawah teks ini */
-  padding-bottom: 5px; /* Jarak nafas antara teks dan garis animasi */
+  position: relative; 
+  padding-bottom: 5px; 
 }
 
 .nav-links a:hover {
-  color: var(--primary-color); /* Warna teks berubah saat disentuh */
+  color: var(--text-dark); 
 }
 
-/* Elemen garis tak terlihat (lebar 0) */
 .nav-links a::after {
   content: '';
   position: absolute;
-  width: 0; /* Mulai dari lebar 0 */
-  height: 2px; /* Ketebalan garis */
-  bottom: 0; /* Posisikan pas di paling bawah teks */
-  left: 0; /* Garis memanjang dari arah kiri */
-  background-color: var(--primary-color);
-  transition: width 0.3s ease-in-out; /* Transisi pelebaran garis yang mulus */
+  width: 0; 
+  height: 2px; 
+  bottom: 0; 
+  left: 0; 
+  background-color: var(--text-dark); /* Garis bawah warna gelap elegan */
+  transition: width 0.3s ease-in-out; 
 }
 
-/* Saat teks di-hover, paksa garis melebar menjadi 100% dari ukuran teks */
 .nav-links a:hover::after {
   width: 100%;
+}
+
+/* =========================================
+   HALAMAN KONTAK (Revisi: Bentuk Terpisah & Bersih)
+   ========================================= */
+.contact-page {
+  padding: 4rem 5%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.contact-header h1 {
+  font-size: 2.5rem;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.contact-header p {
+  color: var(--text-light);
+  font-size: 1.1rem;
+}
+
+/* 1. PENERAPAN CSS GRID (Dibuat terpisah dengan gap) */
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr; 
+  gap: 2rem; /* Ini yang bikin bentuknya tidak menyatu */
+  align-items: start;
+}
+
+/* 2. PENERAPAN FLEXBOX & BOX MODEL (Panel Kiri - Info) */
+.contact-info {
+  background-color: var(--bg-white); 
+  padding: 2.5rem; 
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); /* Bayangan estetik */
+  display: flex; 
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.contact-info h2 {
+  font-size: 1.5rem;
+  margin-bottom: -1rem;
+  color: var(--text-dark);
+}
+
+.contact-info > p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.info-item {
+  display: flex; 
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+
+.info-item .icon {
+  font-size: 1.2rem;
+  background: var(--bg-page); /* Latar ikon abu-abu sangat muda */
+  padding: 0.8rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.info-item strong {
+  display: block;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  color: var(--text-dark);
+}
+
+.info-item p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+/* 3. PENERAPAN FLEXBOX (Panel Kanan - Form) */
+.contact-form-wrapper {
+  background-color: var(--bg-white);
+  padding: 3rem; 
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.contact-form {
+  display: flex; 
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: var(--text-dark);
+  font-size: 0.9rem;
+}
+
+/* Styling Input ala Shadcn (Minimalis, outline tipis) */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem 1rem; 
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background-color: transparent; /* Background transparan */
+  color: var(--text-dark);
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+/* Efek Glow modern saat input sedang diisi */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent-color); /* Border jadi biru aksen */
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); /* Ring biru tipis khas Shadcn */
+}
+
+.form-group textarea {
+  resize: vertical; /* Mengunci tarikan hanya untuk ke bawah/atas */
+  min-height: 120px; /* Batas tinggi minimal saat awal dirender */
+  max-height: 400px; /* Opsional: Batas maksimal ditarik agar tidak merusak halaman ke bawah */
+}
+
+/* =========================================
+   FIX UNTUK DROPDOWN (SELECT & OPTION)
+   ========================================= */
+
+/* Paksa select memiliki background putih solid agar tidak bug saat dibuka */
+.form-group select {
+  background-color: var(--bg-white);
+  cursor: pointer;
+}
+
+/* Paksa isi list pilihan (option) berwarna putih dan teks gelap */
+.form-group select option {
+  background-color: var(--bg-white);
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  padding: 0.5rem; 
+}
+
+/* Tombol Submit */
+.btn-submit {
+  background-color: var(--primary-color); /* Warna slate gelap */
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.btn-submit:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-2px); 
+  box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.2);
+}
+
+/* =========================================
+   4. RESPONSIF (Mobile View)
+   ========================================= */
+@media (max-width: 768px) {
+  .contact-container {
+    grid-template-columns: 1fr; 
+  }
+}
+
+/* ========================================
+    Styling Card
+   ======================================== */
+
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 15px;
+  flex: 0 1 calc(30% - 20px);
+  display: flex;
+  flex-direction: column;
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+}
+
+.card h3 {
+  margin: 10px 0 5px;
+}
+
+.card p {
+  margin: 3px 0;
+  color: gray;
+  font-size: 14px;
 }
