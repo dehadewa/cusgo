@@ -9,8 +9,7 @@
 </head>
 
 <body>
-
-  <!-- Wadah Header: Akan diganti SEPENUHNYA oleh JS agar tidak merusak CSS -->
+  <!-- Wadah Header -->
   <div id="header-container"></div>
 
   <main class="container">
@@ -19,13 +18,14 @@
       <p>Pilih unit motor yang paling sesuai dengan kebutuhan perjalananmu.</p>
     </div>
 
-    <div class="card-grid"></div>
+    <!-- TAMBAHKAN id="unit-container" di sini -->
+    <div id="unit-container" class="card-grid"></div>
   </main>
 
   <!-- Wadah Footer -->
   <div id="footer-container"></div>
 
-  <!-- PENTING: Wajib pakai type="module" -->
+  <!-- Cukup panggil global.js saja dengan type="module" -->
   <script type="module" src="./src/global.js"></script>
 </body>
 

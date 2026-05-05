@@ -143,10 +143,13 @@ body {
   font-size: 1.1rem;
 }
 
+/* --- PERUBAHAN UTAMA DI SINI --- */
 .card-grid {
-  display: flex;
-  flex-wrap: wrap; 
-  justify-content: center; 
+  display: grid;
+  /* Magic-nya ada di sini: 
+     Akan menjejerkankan card sebanyak mungkin (maksimal 4 di layar 1200px).
+     Jika layar mengecil, card akan ikut mengecil sampai batas 240px, baru dia turun ke bawah. */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
   gap: 2rem;
 }
 
@@ -160,12 +163,13 @@ body {
   flex-direction: column;
   transition: all 0.3s ease;
   width: 100%;
-  max-width: 320px; 
+  /* max-width: 320px; -> DIHAPUS agar card bisa fleksibel mengikuti Grid */
 }
 
 .card:hover {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   border-color: var(--accent-color);
+  transform: translateY(-5px); /* Tambahan sedikit efek ngambang ke atas saat dihover */
 }
 
 /* =========================================

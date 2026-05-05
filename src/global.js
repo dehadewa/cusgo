@@ -1,11 +1,10 @@
-import { teamData } from './dummyData.js';
+// Import data dari file dummyData.js (Pastikan import dua-duanya)
+import { teamData, unitMotor } from './dummyData.js';
 
 document.addEventListener("DOMContentLoaded", () => {
   // ==========================================
   // 1. RENDER HEADER & FOOTER
   // ==========================================
-  
-  // Tambahkan div class="menu-toggle" untuk tombol Hamburger
   const headerHTML = `
     <header class="navbar">
       <div class="logo">
@@ -32,8 +31,22 @@ document.addEventListener("DOMContentLoaded", () => {
   `;
 
   const footerHTML = `
-    <footer class="footer" style="text-align: center; padding: 20px; margin-top: 40px; background-color: #f8f9fa;">
-      <p>&copy; 2026 Cusgo Rental Motor. All rights reserved.</p>
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h2>Cusgo<span>.</span></h2>
+          <p>Partner perjalanan terbaik Anda di Kota Blitar.</p>
+        </div>
+        <div class="footer-links">
+          <a href="unit.html">Armada</a>
+          <a href="contact.html">Kontak</a>
+          <a href="agreement.html">Syarat & Ketentuan</a>
+        </div>
+      </div>
+      <div class="footer-quote">
+        <p>"Life is a journey, enjoy the ride with Cusgo."</p>
+        <span>— Cusgo Team 2026</span>
+      </div>
     </footer>
   `;
 
@@ -51,7 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (mobileMenu && navLinksMenu) {
     mobileMenu.addEventListener("click", () => {
-      // Toggle class untuk memunculkan/menyembunyikan menu
       mobileMenu.classList.toggle("is-active");
       navLinksMenu.classList.toggle("active-menu"); 
     });
@@ -70,12 +82,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ==========================================
-  // 4. RENDER DATA ANGGOTA TIM DARI DUMMY
+  // 4. RENDER DATA ANGGOTA TIM (KHUSUS about.html)
   // ==========================================
   const teamContainer = document.getElementById("team-container");
 
   if (teamContainer) {
     let teamCardsHTML = "";
+    
     teamData.forEach(member => {
       teamCardsHTML += `
         <div class="card about-card">
@@ -88,6 +101,29 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
     });
+
     teamContainer.innerHTML = teamCardsHTML;
+  }
+
+  // ==========================================
+  // 5. RENDER DATA UNIT MOTOR (KHUSUS unit.html)
+  // ==========================================
+  const unitContainer = document.getElementById("unit-container");
+
+  if (unitContainer) {
+    let unitCardsHTML = "";
+
+    unitMotor.forEach(unit => {
+      unitCardsHTML += `
+        <div class="card unit-card">
+          <img src="${unit.img}" alt="${unit.nama}">
+          <h3>${unit.nama}</h3>
+          <p>${unit.harga}</p>
+          <button class="btn-action">Sewa Sekarang</button>
+        </div>
+      `;
+    });
+
+    unitContainer.innerHTML = unitCardsHTML;
   }
 });
