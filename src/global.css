@@ -89,13 +89,30 @@ body {
 
 /* --- Penanda Halaman Aktif --- */
 .nav-links a.active {
-  color: var(--text-dark); /* Warna teks jadi gelap seperti saat di-hover */
-  font-weight: 700; /* Teks sedikit lebih tebal agar menonjol */
+  color: var(--text-dark);
+  font-weight: 700;
 }
 
 .nav-links a.active::after {
-  width: 100%; /* Garis bawahnya ditarik penuh secara permanen */
-  background-color: var(--text-dark); /* Garis bawahnya pakai warna biru aksen agar lebih cantik */
+  width: 100%;
+  background-color: var(--text-dark);
+}
+
+/* --- Hamburger Menu (Base / Desktop Hidden) --- */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+  z-index: 99;
+}
+
+.menu-toggle .bar {
+  width: 25px;
+  height: 3px;
+  background-color: var(--text-dark);
+  transition: all 0.3s ease-in-out;
+  border-radius: 3px;
 }
 
 /* =========================================
@@ -274,7 +291,6 @@ body {
   grid-template-columns: repeat(2, 1fr);
   gap: 12px 40px;
 }
-
 
 /* =========================================
    6. STYLING SPESIFIK: HALAMAN KONTAK
@@ -632,12 +648,10 @@ body {
 
 /* =========================================
    8. MEDIA QUERIES (RESPONSIF / FLEXIBILITAS LENGKAP)
-   Semua pengaturan tampilan untuk layar HP & Tablet dikumpulkan di sini
    ========================================= */
 
 /* --- TAMPILAN TABLET (Lebar maksimal 968px) --- */
 @media (max-width: 968px) {
-  /* Ubah layout Hero menjadi atas-bawah */
   .hero {
     grid-template-columns: 1fr;
     text-align: center;
@@ -654,16 +668,67 @@ body {
 }
 
 /* --- TAMPILAN SMARTPHONE (Lebar maksimal 768px) --- */
-@media (max-width: 768px) {
-  /* Ubah layout Kontak menjadi 1 kolom vertikal */
+@media screen and (max-width: 768px) {
+  /* Layout Kontak & Footer */
   .contact-container {
     grid-template-columns: 1fr; 
   }
   
-  /* Susun ulang isi Footer menjadi ke tengah dan berbaris ke bawah */
   .footer-content {
     flex-direction: column;
     text-align: center;
+  }
+
+  /* --- MENU HAMBURGER & DROPDOWN --- */
+  .menu-toggle {
+    display: flex; 
+  }
+
+  .nav-links {
+    display: none; 
+    flex-direction: column;
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-white); 
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+    z-index: 98;
+  }
+
+  .nav-links.active-menu {
+    display: flex;
+  }
+
+  .nav-links ul {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 0;
+    gap: 15px;
+  }
+
+  .nav-links ul li {
+    margin: 10px 0;
+  }
+
+  /* --- ANIMASI HAMBURGER --- */
+  .menu-toggle.is-active .bar:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-toggle.is-active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .menu-toggle.is-active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* --- Layout Kartu Perjanjian --- */
+  .agreement-card {
+    padding: 2.5rem 1.5rem; 
+  }
+  .highlight-box {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 
@@ -675,8 +740,8 @@ body {
   border-radius: 16px;
   border: 1px solid var(--border-color);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-  padding: 4rem 6rem; /* Padding kiri-kanan diperlebar agar seimbang */
-  width: 100%; /* Memaksimalkan lebar kartu mengikuti garis container */
+  padding: 4rem 6rem; 
+  width: 100%; 
   margin: 0 auto;
 }
 
@@ -686,12 +751,11 @@ body {
   line-height: 1.8;
   margin-bottom: 2.5rem;
   text-align: center;
-  max-width: 800px; /* Teks intro tetap di tengah agar rapi */
+  max-width: 800px; 
   margin-left: auto;
   margin-right: auto;
 }
 
-/* Kotak Peringatan Kuning ala Framework Modern */
 .highlight-box {
   background-color: #fffbeb; 
   border: 1px solid #fde68a;
@@ -709,7 +773,7 @@ body {
 .terms-content {
   display: flex;
   flex-direction: column;
-  gap: 2.5rem; /* Jarak antar bab diperlebar agar tidak sesak */
+  gap: 2.5rem; 
 }
 
 .term-section h2 {
@@ -717,14 +781,14 @@ body {
   color: var(--text-dark);
   margin-bottom: 1rem;
   font-weight: 700;
-  border-bottom: 1px solid var(--bg-page); /* Garis pemisah tipis di bawah judul bab */
+  border-bottom: 1px solid var(--bg-page); 
   padding-bottom: 0.5rem;
 }
 
 .term-section p, 
 .term-section ul {
   color: var(--text-light);
-  line-height: 1.8; /* Jarak antar baris teks diperlebar agar nyaman dibaca */
+  line-height: 1.8; 
   font-size: 1rem;
 }
 
@@ -745,15 +809,4 @@ body {
   border-top: 2px solid var(--bg-page);
   text-align: center;
   font-size: 1.1rem;
-}
-
-/* Penyesuaian Responsif untuk Agreement Card */
-@media (max-width: 768px) {
-  .agreement-card {
-    padding: 2.5rem 1.5rem; /* Kembali merapat saat dibuka di layar HP */
-  }
-  .highlight-box {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
 }
