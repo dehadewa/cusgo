@@ -1,5 +1,5 @@
 // Import data dari file dummyData.js (Pastikan import dua-duanya)
-import { teamData, unitMotor } from './dummyData.js';
+import { teamData, unitMotor, statsData, featureData, stepsData, testimonialData } from './dummyData.js';
 
 document.addEventListener("DOMContentLoaded", () => {
   // ==========================================
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (mobileMenu && navLinksMenu) {
     mobileMenu.addEventListener("click", () => {
       mobileMenu.classList.toggle("is-active");
-      navLinksMenu.classList.toggle("active-menu"); 
+      navLinksMenu.classList.toggle("active-menu");
     });
   }
 
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (teamContainer) {
     let teamCardsHTML = "";
-    
+
     teamData.forEach(member => {
       teamCardsHTML += `
         <div class="card about-card">
@@ -126,4 +126,79 @@ document.addEventListener("DOMContentLoaded", () => {
 
     unitContainer.innerHTML = unitCardsHTML;
   }
+
+  // ==========================================
+  // 6. RENDER DATA HALAMAN INDEX (KHUSUS index.html)
+  // ==========================================
+
+  const stats = document.getElementById("stats");
+
+  if (stats) {
+    let statsHTML = "";
+
+    statsData.forEach(i => {
+      statsHTML += `
+    <div class="stat-item">
+      <h3>${i.title}</h3>
+      <p>${i.desc}</p>
+    </div>
+  `;
+    });
+
+    stats.innerHTML = statsHTML;
+  }
+
+  const features = document.getElementById("features");
+
+  if (features) {
+    let featuresHTML = "";
+
+    featureData.forEach(i => {
+      featuresHTML += `
+        <div class="card feature-card">
+          <div class="f-icon">${i.icon}</div>
+          <h3>${i.title}</h3>
+          <p>${i.desc}</p>
+        </div>
+      `;
+    });
+
+    features.innerHTML = featuresHTML;
+  }
+
+  const steps = document.getElementById("steps");
+
+  if (steps) {
+    let stepsHTML = "";
+
+    stepsData.forEach(i => {
+      stepsHTML += `
+        <div class="step-item">
+          <div class="step-num">${i.num}</div>
+          <h3>${i.title}</h3>
+          <p>${i.desc}</p>
+        </div>
+      `;
+    });
+
+    steps.innerHTML = stepsHTML;
+  }
+
+  const test = document.getElementById("testimonials");
+
+  if (test) {
+    let testHTML = "";
+
+    testimonialData.forEach(i => {
+      testHTML += `
+        <div class="card testimonial-card">
+          <p>"${i.text}"</p>
+          <strong>- ${i.name}</strong>
+        </div>
+      `;
+    });
+
+    test.innerHTML = testHTML;
+  }
+
 });
