@@ -5,26 +5,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cusgo - Rental Motor</title>
-
-  <link rel="stylesheet" href="./global.css" />
+  <link rel="stylesheet" href="./src/global.css" />
 </head>
 
 <body>
-  <header class="navbar">
-    <div class="logo">
-      <a href="index.html">Cusgo<span>.</span></a>
-    </div>
-
-    <nav class="nav-links">
-      <ul>
-        <li><a href="index.html">Beranda</a></li>
-        <li><a href="unit.html">Unit</a></li>
-        <li><a href="about.html" class="active">Tentang</a></li>
-        <li><a href="agreement.html">Perjanjian</a></li>
-        <li><a href="contact.html">Kontak</a></li>
-      </ul>
-    </nav>
-  </header>
+  <!-- Wadah Header: Akan diganti SEPENUHNYA oleh JS agar tidak merusak CSS -->
+  <div id="header-container"></div>
 
   <main class="container">
     <div class="section-header">
@@ -70,53 +56,15 @@
       <p>Mengenal lebih dekat orang-orang hebat di balik layanan Cusgo.</p>
     </div>
 
-    <div class="card-grid">
-      <div class="card about-card">
-        <img src="./foto/daviq.png" alt="Daviq" />
-        <h3>Daviq Cahyo L.</h3>
-        <span class="nim">24104410043</span>
-        <p>Sidoarjo, 08 Maret 2006</p>
-        <p class="address">Centong, Sanankulon, Kab. Blitar</p>
-        <p class="quote">"Jarang terlihat namun sering terlibat"</p>
-      </div>
-
-      <div class="card about-card">
-        <img src="./foto/anisa.png" alt="Anisa" />
-        <h3>Anisaturrohmah</h3>
-        <span class="nim">24104410044</span>
-        <p>Blitar, 20 Januari 2006</p>
-        <p class="address">Dimoro, Sukorejo, Kota Blitar</p>
-        <p class="quote">"Sembunyikan prosesmu, tunjukkan hasilmu"</p>
-      </div>
-
-      <div class="card about-card">
-        <img src="./foto/premas.png" alt="Premas" />
-        <h3>Premas Aji Susilo</h3>
-        <span class="nim">24104410055</span>
-        <p>Blitar, 21 Desember 2004</p>
-        <p class="address">Ringinanom, Udanawu, Kab. Blitar</p>
-        <p class="quote">"Find beauty in simplicity."</p>
-      </div>
-
-      <div class="card about-card">
-        <img src="./foto/firman.png" alt="Firman" />
-        <h3>Firlian Firman Syah</h3>
-        <span class="nim">24104410057</span>
-        <p>Kediri, 5 Juli 2005</p>
-        <p class="address">Pakunden, Sukorejo, Kota Blitar</p>
-        <p class="quote">"Jangan berhenti bernafas"</p>
-      </div>
-
-      <div class="card about-card">
-        <img src="./foto/putri.png" alt="Putri" />
-        <h3>Putri Perwitasari</h3>
-        <span class="nim">24104410080</span>
-        <p>Blitar, 4 Maret 2006</p>
-        <p class="address">Modangan, Nglegok, Kab. Blitar</p>
-        <p class="quote">"Bergerak untuk bertumbuh, bertumbuh untuk berdampak"</p>
-      </div>
-    </div>
+    <!-- Wadah Tim: Class card-grid tetap dipertahankan agar CSS grid-nya jalan -->
+    <div id="team-container" class="card-grid"></div>
   </main>
+
+  <!-- Wadah Footer -->
+  <div id="footer-container"></div>
+
+  <!-- PENTING: Wajib pakai type="module" -->
+  <script type="module" src="./src/global.js"></script>
 </body>
 
 </html>

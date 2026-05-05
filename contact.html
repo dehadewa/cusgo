@@ -5,24 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cusgo - Rental Motor</title>
 
-    <link rel="stylesheet" href="./global.css" />
+    <link rel="stylesheet" href="./src/global.css" />
   </head>
   <body>
-    <header class="navbar">
-      <div class="logo">
-        <a href="index.html">Cusgo<span>.</span></a>
-      </div>
-
-      <nav class="nav-links">
-        <ul>
-          <li><a href="index.html">Beranda</a></li>
-          <li><a href="unit.html">Unit</a></li>
-          <li><a href="about.html">Tentang</a></li>
-          <li><a href="agreement.html">Perjanjian</a></li>
-          <li><a href="contact.html" class="active">Kontak</a></li>
-        </ul>
-      </nav>
-    </header>
+    <!-- Wadah Header: Akan diganti SEPENUHNYA oleh JS agar tidak merusak CSS -->
+    <div id="header-container"></div>
 
     <main class="container">
       <div class="section-header">
@@ -111,5 +98,11 @@
         </div>
       </div>
     </main>
+
+    <!-- Wadah Footer -->
+  <div id="footer-container"></div>
+
+  <!-- PENTING: Wajib pakai type="module" -->
+  <script type="module" src="./src/global.js"></script>
   </body>
 </html>
