@@ -1,0 +1,14 @@
+/* 1. Panggil Bootstrap dari node_modules */
+@import url('../../node_modules/bootstrap/dist/css/bootstrap.min.css');
+
+/* 2. Custom CSS kamu di bawah sini */
+body {
+    /* Contoh: Karena kamu suka desain gelap/futuristik, kita set background agak gelap */
+    background-color: #121212; 
+    color: #ffffff;
+}
+
+.tombol-custom {
+    border-radius: 20px;
+    padding: 10px 30px;
+}
