@@ -1,12 +1,28 @@
 /* ==========================================
-   1. IMPORT DATABASE LOKAL
+   1. IMPORT DATABASE LOKAL (Sudah Dibersihkan)
    ========================================== */
-import { teamData, unitMotor, statsData, featureData, stepsData, testimonialData, bookingMotorPrices, bookingMotorNames, paymentMethods } from '../data/dummyData.js';
+import { 
+  teamData, 
+  unitMotor, 
+  statsData, 
+  featureData, 
+  stepsData, 
+  testimonialData, 
+  paymentMethods 
+} from '../data/dummyData.js';
 
+/* ==========================================
+   2. VARIABEL GLOBAL (Untuk Form Booking)
+   ========================================== */
+let currentStep = 1;
+const totalSteps = 3;
+
+/* ==========================================
+   3. EVENT UTAMA: KETIKA HALAMAN SELESAI DIMUAT
+   ========================================== */
 document.addEventListener("DOMContentLoaded", () => {
-  /* ==========================================
-     2. RENDER HEADER (NAVBAR BOOTSTRAP)
-     ========================================== */
+  
+  // --- A. RENDER HEADER (NAVBAR BOOTSTRAP) ---
   const headerHTML = `
     <nav class="navbar navbar-expand-lg navbar-cusgo sticky-top fade-in">
       <div class="container">
@@ -31,9 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
     </nav>
   `;
 
-  /* ==========================================
-     3. RENDER FOOTER BOOTSTRAP
-     ========================================== */
+  // --- B. RENDER FOOTER BOOTSTRAP ---
   const footerHTML = `
     <footer class="bg-white border-top mt-5 pt-5 pb-4">
       <div class="container">
@@ -63,9 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (headerContainer) headerContainer.outerHTML = headerHTML;
   if (footerContainer) footerContainer.outerHTML = footerHTML;
 
-  /* ==========================================
-     4. SET MENU ACTIVE SECARA DINAMIS
-     ========================================== */
+  // --- C. SET MENU ACTIVE SECARA DINAMIS ---
   const currentLocation = window.location.pathname.split("/").pop() || "index.html";
   const navLinks = document.querySelectorAll(".nav-link-custom");
 
@@ -75,9 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  /* ==========================================
-     5. RENDER DATA ANGGOTA TIM (KHUSUS about.html)
-     ========================================== */
+  // --- D. RENDER DATA ANGGOTA TIM ---
   const teamContainer = document.getElementById("team-container");
   if (teamContainer) {
     let teamCardsHTML = "";
@@ -104,9 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     teamContainer.innerHTML = teamCardsHTML;
   }
 
-  /* ==========================================
-     6. RENDER DATA UNIT MOTOR (KHUSUS unit.html)
-     ========================================== */
+  // --- E. RENDER DATA UNIT MOTOR ---
   const unitContainer = document.getElementById("unit-container");
   if (unitContainer) {
     let unitCardsHTML = "";
@@ -120,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <p class="card-text text-secondary fw-semibold mb-4">${unit.harga}</p>
               <div class="mt-auto d-flex gap-2">
                 <a href="detail-unit.html?id=${unit.id}" class="btn btn-outline-secondary w-100 py-2 rounded-3 fw-bold border-2">Detail</a>
-                <a href="booking.html" class="btn btn-action w-100 py-2 rounded-3">Sewa</a>
+                <a href="booking.html?id=${unit.id}" class="btn btn-action w-100 py-2 rounded-3">Sewa</a>
               </div>
             </div>
           </div>
@@ -130,9 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
     unitContainer.innerHTML = unitCardsHTML;
   }
 
-  /* ==========================================
-     7. RENDER DATA BERANDA (KHUSUS index.html)
-     ========================================== */
+  // --- F. RENDER DATA BERANDA ---
   const stats = document.getElementById("stats");
   if (stats) {
     let statsHTML = "";
@@ -199,11 +205,8 @@ document.addEventListener("DOMContentLoaded", () => {
     test.innerHTML = testHTML;
   }
 
-  /* ==========================================
-     8. LOGIKA FORM KONTAK (NOTIFIKASI TOAST MODERN)
-     ========================================== */
+  // --- G. LOGIKA FORM KONTAK ---
   const contactForm = document.getElementById("contactForm");
-  
   if (contactForm) {
     contactForm.addEventListener("submit", function (e) {
       e.preventDefault(); 
@@ -220,7 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
       toastContainer.innerHTML = `
         <div id="contactToast" class="toast align-items-center text-bg-success border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="d-flex">
-            <div class="toast-body fs-10 fw-medium px-3 py-3">
+            <div class="toast-body fs-6 fw-medium px-3 py-3">
               ✨ Terima kasih telah menghubungi kami! Pesan Anda segera kami balas.
             </div>
             <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast" aria-label="Tutup"></button>
@@ -228,270 +231,25 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
       
-      // Jika Bootstrap ESM tidak dipanggil di script ini, pastikan bootstrap.bundle.min.js ter-load di HTML
       if (typeof bootstrap !== 'undefined') {
         const toastElement = document.getElementById('contactToast');
-        const toast = new bootstrap.Toast(toastElement, {
-          delay: 4000
-        });
+        const toast = new bootstrap.Toast(toastElement, { delay: 4000 });
         toast.show();
       } else {
-        alert("Terima kasih telah menghubungi kami! Pesan Anda segera kami balas."); // Fallback aman
+        alert("Terima kasih telah menghubungi kami! Pesan Anda segera kami balas.");
       }
-      
       contactForm.reset(); 
     });
   }
-});
 
-// ===================================
-// STEP-BY-STEP BOOKING FORM HANDLER
-// ===================================
-
-// Alias untuk kemudahan penggunaan
-const motorPrices = bookingMotorPrices;
-const motorNames = bookingMotorNames;
-const paymentMethodLabels = paymentMethods;
-
-let currentStep = 1;
-const totalSteps = 3;
-
-// Initialize booking form
-document.addEventListener('DOMContentLoaded', () => {
-  const bookingForm = document.getElementById('bookingForm');
-  const nextBtn = document.getElementById('nextBtn');
-  const prevBtn = document.getElementById('prevBtn');
-  const submitBtn = document.getElementById('submitBtn');
-
-  // Next button handler
-  if (nextBtn) {
-    nextBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      
-      if (validateCurrentStep()) {
-        if (currentStep === 2) {
-          updateReview();
-        }
-        
-        if (currentStep < totalSteps) {
-          currentStep++;
-          updateSteps();
-        }
-      }
-    });
-  }
-
-  // Previous button handler
-  if (prevBtn) {
-    prevBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (currentStep > 1) {
-        currentStep--;
-        updateSteps();
-      }
-    });
-  }
-
-  // Form submit handler
-  if (bookingForm) {
-    bookingForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      if (validateCurrentStep()) {
-        // Get selected payment method
-        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
-        if (!paymentMethod) {
-          alert('⚠️ Pilih metode pembayaran terlebih dahulu!');
-          return;
-        }
-
-        // Simulasi pengiriman data
-        const formData = {
-          nama: document.getElementById('nama').value,
-          email: document.getElementById('email').value,
-          noTelepon: document.getElementById('noTelepon').value,
-          alamat: document.getElementById('alamat').value,
-          tanggalSewa: document.getElementById('tanggalSewa').value,
-          durasiSewa: document.getElementById('durasiSewa').value,
-          tipeMotoR: document.getElementById('tipeMotoR').value,
-          keperluan: document.getElementById('keperluan').value,
-          metodePembayaran: paymentMethod.value,
-          setujuKetentuan: document.getElementById('setujuKetentuan').checked
-        };
-
-        console.log('Data Pemesanan:', formData);
-        
-        // Tampilkan alert sukses
-        alert('✅ Pemesanan berhasil dikirim!\n\nTim kami akan menghubungi Anda dalam 1x24 jam.');
-        
-        // Reset form
-        bookingForm.reset();
-        currentStep = 1;
-        updateSteps();
-      }
-    });
-  }
-
-  // Update steps on page load
-  updateSteps();
-});
-
-// Validate current step
-function validateCurrentStep() {
-  const form = document.getElementById('bookingForm');
-  const currentStepContent = document.querySelector(`.step-content[step="${currentStep}"]`);
-  
-  if (!currentStepContent) return false;
-
-  // Get all required fields in current step
-  const requiredFields = currentStepContent.querySelectorAll('[required]');
-  
-  let isValid = true;
-  requiredFields.forEach(field => {
-    if (!field.value.trim()) {
-      field.classList.add('is-invalid');
-      isValid = false;
-    } else {
-      field.classList.remove('is-invalid');
-    }
-  });
-
-  // Validate email format if email field exists in current step
-  const emailField = currentStepContent.querySelector('#email');
-  if (emailField && emailField.value) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(emailField.value)) {
-      emailField.classList.add('is-invalid');
-      isValid = false;
-    }
-  }
-
-  // Validate payment method selection on step 3
-  if (currentStep === 3) {
-    const paymentMethodChecked = document.querySelector('input[name="paymentMethod"]:checked');
-    const setujuKetentuan = document.getElementById('setujuKetentuan').checked;
-    
-    if (!paymentMethodChecked) {
-      alert('⚠️ Pilih metode pembayaran terlebih dahulu!');
-      isValid = false;
-    }
-    
-    if (!setujuKetentuan) {
-      alert('⚠️ Anda harus menyetujui syarat dan ketentuan!');
-      isValid = false;
-    }
-  }
-
-  return isValid;
-}
-
-// Update step display
-function updateSteps() {
-  // Update step indicators
-  document.querySelectorAll('.step-indicator').forEach((indicator) => {
-    const step = parseInt(indicator.getAttribute('step'));
-    indicator.classList.remove('active', 'completed');
-    
-    if (step === currentStep) {
-      indicator.classList.add('active');
-    } else if (step < currentStep) {
-      indicator.classList.add('completed');
-    }
-  });
-
-  // Update step content
-  document.querySelectorAll('.step-content').forEach((content) => {
-    const step = parseInt(content.getAttribute('step'));
-    if (step === currentStep) {
-      content.style.display = 'block';
-      content.classList.add('active');
-    } else {
-      content.style.display = 'none';
-      content.classList.remove('active');
-    }
-  });
-
-  // Update button visibility
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const submitBtn = document.getElementById('submitBtn');
-
-  if (currentStep === 1) {
-    prevBtn.style.display = 'none';
-    nextBtn.style.display = 'block';
-    submitBtn.style.display = 'none';
-  } else if (currentStep === totalSteps) {
-    prevBtn.style.display = 'block';
-    nextBtn.style.display = 'none';
-    submitBtn.style.display = 'block';
-  } else {
-    prevBtn.style.display = 'block';
-    nextBtn.style.display = 'block';
-    submitBtn.style.display = 'none';
-  }
-}
-
-// Update review data
-function updateReview() {
-  // Data Penyewa
-  document.getElementById('review-nama').textContent = document.getElementById('nama').value || '-';
-  document.getElementById('review-email').textContent = document.getElementById('email').value || '-';
-  document.getElementById('review-telepon').textContent = document.getElementById('noTelepon').value || '-';
-  document.getElementById('review-alamat').textContent = document.getElementById('alamat').value || '-';
-
-  // Data Penyewaan
-  const tanggal = document.getElementById('tanggalSewa').value;
-  const tanggalFormatted = tanggal ? new Date(tanggal).toLocaleDateString('id-ID', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
-  }) : '-';
-  document.getElementById('review-tanggal').textContent = tanggalFormatted;
-
-  const durasi = document.getElementById('durasiSewa').value;
-  document.getElementById('review-durasi').textContent = durasi ? `${durasi} hari` : '-';
-
-  const motorValue = document.getElementById('tipeMotoR').value;
-  const motorName = motorNames[motorValue] || '-';
-  document.getElementById('review-motor').textContent = motorName;
-
-  // Calculate total
-  if (motorValue && durasi) {
-    const hargaPerHari = motorPrices[motorValue];
-    const total = hargaPerHari * durasi;
-    const dp = Math.round(total * 0.2);
-    document.getElementById('review-total').textContent = `Rp ${total.toLocaleString('id-ID')} (DP: Rp ${dp.toLocaleString('id-ID')})`;
-  } else {
-    document.getElementById('review-total').textContent = 'Rp 0';
-  }
-}
-
-// Remove invalid class on input change
-document.addEventListener('change', (e) => {
-  if (e.target.classList.contains('form-control') || e.target.classList.contains('form-select')) {
-    e.target.classList.remove('is-invalid');
-  }
-});
-
-document.addEventListener('input', (e) => {
-  if (e.target.classList.contains('form-control') || e.target.classList.contains('form-select')) {
-    e.target.classList.remove('is-invalid');
-  }
-});
-
-  /* ==========================================
-     9. LOGIKA HALAMAN DETAIL UNIT DINAMIS
-     ========================================== */
+  // --- H. LOGIKA HALAMAN DETAIL UNIT DINAMIS ---
   const detailContainer = document.getElementById("detail-unit-container");
-  
   if (detailContainer) {
     const urlParams = new URLSearchParams(window.location.search);
     const motorId = urlParams.get('id');
-
     const motorDetail = unitMotor.find(motor => motor.id === motorId);
 
     if (motorDetail) {
-      // 1. Mapping fitur unggulan menjadi list HTML dengan ikon checkmark modern
       const fiturHTML = motorDetail.fitur_unggulan.map(fitur => 
         `<li class="mb-2 d-flex align-items-center text-secondary">
           <span class="me-2 d-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success rounded-circle" style="width: 24px; height: 24px; font-size: 12px;">✓</span> 
@@ -499,23 +257,18 @@ document.addEventListener('input', (e) => {
         </li>`
       ).join('');
 
-      // 2. Mapping histori perjalanan menjadi tag/badge melengkung
       const historiHTML = motorDetail.histori_perjalanan.map(rute => 
         `<span class="badge bg-light text-secondary border px-3 py-2 rounded-pill fw-medium">${rute}</span>`
       ).join('');
 
-      // 3. Cetak HTML dengan gaya UI Premium (Minimalist & Clean)
       detailContainer.innerHTML = `
         <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
           <div class="row g-0 align-items-stretch">
-            <!-- Sisi Kiri: Galeri / Gambar Motor -->
             <div class="col-lg-5 p-5 text-center bg-light d-flex flex-column justify-content-center position-relative">
               <img src="${motorDetail.img}" alt="${motorDetail.nama}" class="img-fluid position-relative" style="max-height: 380px; object-fit: contain; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15)); z-index: 1;">
             </div>
             
-            <!-- Sisi Kanan: Informasi Detail -->
             <div class="col-lg-7 p-4 p-md-5">
-              <!-- Label Header -->
               <div class="d-flex flex-wrap gap-2 mb-4">
                 <span class="badge bg-dark text-white px-3 py-2 rounded-pill fw-medium">${motorDetail.kategori}</span>
                 <span class="badge ${motorDetail.status === 'Tersedia' ? 'bg-success text-success border-success' : 'bg-danger text-danger border-danger'} bg-opacity-10 border border-opacity-25 px-3 py-2 rounded-pill fw-medium">
@@ -526,59 +279,32 @@ document.addEventListener('input', (e) => {
                 </span>
               </div>
 
-              <!-- Judul & Harga -->
               <h2 class="fw-bolder text-dark mb-1" style="font-size: 2.2rem; letter-spacing: -1px;">${motorDetail.nama}</h2>
               <h3 class="fw-bold mb-4" style="color: var(--accent-color); font-size: 1.6rem;">${motorDetail.harga}</h3>
               
-              <!-- Deskripsi Singkat -->
               <p class="text-secondary lh-lg mb-5">${motorDetail.deskripsi}</p>
               
-              <!-- Grid Spesifikasi Teknis -->
               <h6 class="fw-bold text-dark mb-3 text-uppercase fs-7" style="letter-spacing: 1px;">Spesifikasi Teknis</h6>
               <div class="row g-3 mb-5 pb-4 border-bottom">
-                <div class="col-6 col-sm-4">
-                  <span class="d-block text-secondary small mb-1">Kapasitas Mesin</span>
-                  <strong class="text-dark">${motorDetail.spesifikasi.cc}</strong>
-                </div>
-                <div class="col-6 col-sm-4">
-                  <span class="d-block text-secondary small mb-1">Kapasitas Tangki</span>
-                  <strong class="text-dark">${motorDetail.spesifikasi.tangki}</strong>
-                </div>
-                <div class="col-6 col-sm-4">
-                  <span class="d-block text-secondary small mb-1">Ruang Bagasi</span>
-                  <strong class="text-dark">${motorDetail.spesifikasi.bagasi}</strong>
-                </div>
-                <div class="col-6 col-sm-4">
-                  <span class="d-block text-secondary small mb-1">Bahan Bakar</span>
-                  <strong class="text-dark">${motorDetail.spesifikasi.bensin}</strong>
-                </div>
-                <div class="col-6 col-sm-4">
-                  <span class="d-block text-secondary small mb-1">Tahun Rilis</span>
-                  <strong class="text-dark">${motorDetail.spesifikasi.tahun}</strong>
-                </div>
-                <div class="col-6 col-sm-4">
-                  <span class="d-block text-secondary small mb-1">Varian Warna</span>
-                  <strong class="text-dark">${motorDetail.spesifikasi.warna}</strong>
-                </div>
+                <div class="col-6 col-sm-4"><span class="d-block text-secondary small mb-1">Kapasitas Mesin</span><strong class="text-dark">${motorDetail.spesifikasi.cc}</strong></div>
+                <div class="col-6 col-sm-4"><span class="d-block text-secondary small mb-1">Kapasitas Tangki</span><strong class="text-dark">${motorDetail.spesifikasi.tangki}</strong></div>
+                <div class="col-6 col-sm-4"><span class="d-block text-secondary small mb-1">Ruang Bagasi</span><strong class="text-dark">${motorDetail.spesifikasi.bagasi}</strong></div>
+                <div class="col-6 col-sm-4"><span class="d-block text-secondary small mb-1">Bahan Bakar</span><strong class="text-dark">${motorDetail.spesifikasi.bensin}</strong></div>
+                <div class="col-6 col-sm-4"><span class="d-block text-secondary small mb-1">Tahun Rilis</span><strong class="text-dark">${motorDetail.spesifikasi.tahun}</strong></div>
+                <div class="col-6 col-sm-4"><span class="d-block text-secondary small mb-1">Varian Warna</span><strong class="text-dark">${motorDetail.spesifikasi.warna}</strong></div>
               </div>
 
-              <!-- Fitur Utama & Histori -->
               <div class="row g-4 mb-5">
                 <div class="col-md-6">
                   <h6 class="fw-bold text-dark mb-3">Fitur Kendaraan</h6>
-                  <ul class="list-unstyled mb-0">
-                    ${fiturHTML}
-                  </ul>
+                  <ul class="list-unstyled mb-0">${fiturHTML}</ul>
                 </div>
                 <div class="col-md-6">
                   <h6 class="fw-bold text-dark mb-3">Histori Rute Populer</h6>
-                  <div class="d-flex flex-wrap gap-2">
-                    ${historiHTML}
-                  </div>
+                  <div class="d-flex flex-wrap gap-2">${historiHTML}</div>
                 </div>
               </div>
 
-              <!-- Tombol Pesan (Pill Button) -->
               <a href="booking.html?id=${motorDetail.id}" class="btn btn-action w-100 py-3 rounded-pill shadow-sm text-center fw-bold fs-6">Lanjutkan Pemesanan</a>
             </div>
           </div>
@@ -596,5 +322,220 @@ document.addEventListener('input', (e) => {
     }
   }
 
+  // --- I. STEP-BY-STEP BOOKING FORM HANDLER ---
+  const bookingForm = document.getElementById('bookingForm');
+  const motorSelect = document.getElementById('tipeMotoR');
+  
+  // 1. OTOMATIS MENGISI DROPDOWN MOTOR DI FORM BOOKING
+  if (motorSelect) {
+    motorSelect.innerHTML = `<option value="" disabled selected>Pilih armada...</option>` + 
+      unitMotor.map(motor => `<option value="${motor.id}">${motor.nama} - ${motor.harga}</option>`).join('');
 
+    // 2. TANGKAP PARAMETER ID DARI URL (Fitur Otomatis Pilih)
+    const urlParamsBooking = new URLSearchParams(window.location.search);
+    const preselectedMotor = urlParamsBooking.get('id');
+    
+    if (preselectedMotor) {
+      motorSelect.value = preselectedMotor;
+    }
+  }
+
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (validateCurrentStep()) {
+        if (currentStep === 2) updateReview();
+        if (currentStep < totalSteps) {
+          currentStep++;
+          updateSteps();
+        }
+      }
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (currentStep > 1) {
+        currentStep--;
+        updateSteps();
+      }
+    });
+  }
+
+  if (bookingForm) {
+    bookingForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (validateCurrentStep()) {
+        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+        if (!paymentMethod) {
+          alert('⚠️ Pilih metode pembayaran terlebih dahulu!');
+          return;
+        }
+        
+        const formData = {
+          nama: document.getElementById('nama').value,
+          email: document.getElementById('email').value,
+          noTelepon: document.getElementById('noTelepon').value,
+          alamat: document.getElementById('alamat').value,
+          tanggalSewa: document.getElementById('tanggalSewa').value,
+          durasiSewa: document.getElementById('durasiSewa').value,
+          tipeMotoR: document.getElementById('tipeMotoR').value,
+          metodePembayaran: paymentMethod.value,
+          setujuKetentuan: document.getElementById('setujuKetentuan').checked
+        };
+        
+        console.log('Data Pemesanan Berhasil:', formData);
+        alert('✅ Pemesanan berhasil dikirim!\n\nTim kami akan menghubungi Anda dalam 1x24 jam.');
+        bookingForm.reset();
+        currentStep = 1;
+        updateSteps();
+      }
+    });
+    
+    // Inisialisasi tampilan form saat web dimuat
+    updateSteps();
+  }
+
+}); // <--- PENUTUP EVENT LISTENER UTAMA (TIDAK ADA LAGI YANG TERTINGGAL)
+
+
+/* ==============================================================
+   4. FUNGSI GLOBAL BOOKING (Validasi & Perhitungan)
+   ============================================================== */
+
+function validateCurrentStep() {
+  const currentStepContent = document.querySelector(`.step-content[step="${currentStep}"]`);
+  if (!currentStepContent) return false;
+
+  const requiredFields = currentStepContent.querySelectorAll('[required]');
+  let isValid = true;
+  
+  requiredFields.forEach(field => {
+    if (!field.value.trim()) {
+      field.classList.add('is-invalid');
+      isValid = false;
+    } else {
+      field.classList.remove('is-invalid');
+    }
+  });
+
+  const emailField = currentStepContent.querySelector('#email');
+  if (emailField && emailField.value) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailField.value)) {
+      emailField.classList.add('is-invalid');
+      isValid = false;
+    }
+  }
+
+  if (currentStep === 3) {
+    const paymentMethodChecked = document.querySelector('input[name="paymentMethod"]:checked');
+    const setujuKetentuan = document.getElementById('setujuKetentuan');
+    
+    if (!paymentMethodChecked) {
+      alert('⚠️ Pilih metode pembayaran terlebih dahulu!');
+      isValid = false;
+    }
+    if (setujuKetentuan && !setujuKetentuan.checked) {
+      alert('⚠️ Anda harus menyetujui syarat dan ketentuan!');
+      isValid = false;
+    }
+  }
+  return isValid;
+}
+
+function updateSteps() {
+  document.querySelectorAll('.step-indicator').forEach((indicator) => {
+    const step = parseInt(indicator.getAttribute('step'));
+    indicator.classList.remove('active', 'completed');
+    if (step === currentStep) {
+      indicator.classList.add('active');
+    } else if (step < currentStep) {
+      indicator.classList.add('completed');
+    }
+  });
+
+  document.querySelectorAll('.step-content').forEach((content) => {
+    const step = parseInt(content.getAttribute('step'));
+    if (step === currentStep) {
+      content.style.display = 'block';
+      content.classList.add('active');
+    } else {
+      content.style.display = 'none';
+      content.classList.remove('active');
+    }
+  });
+
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+
+  if (prevBtn && nextBtn && submitBtn) {
+    if (currentStep === 1) {
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'block';
+      submitBtn.style.display = 'none';
+    } else if (currentStep === totalSteps) {
+      prevBtn.style.display = 'block';
+      nextBtn.style.display = 'none';
+      submitBtn.style.display = 'block';
+    } else {
+      prevBtn.style.display = 'block';
+      nextBtn.style.display = 'block';
+      submitBtn.style.display = 'none';
+    }
+  }
+}
+
+function updateReview() {
+  const getVal = (id) => document.getElementById(id) ? document.getElementById(id).value : '-';
+  const setText = (id, text) => { if(document.getElementById(id)) document.getElementById(id).textContent = text; };
+
+  setText('review-nama', getVal('nama'));
+  setText('review-email', getVal('email'));
+  setText('review-telepon', getVal('noTelepon'));
+  setText('review-alamat', getVal('alamat'));
+
+  const tanggal = getVal('tanggalSewa');
+  const tanggalFormatted = (tanggal && tanggal !== '-') ? new Date(tanggal).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' }) : '-';
+  setText('review-tanggal', tanggalFormatted);
+
+  const durasi = getVal('durasiSewa');
+  setText('review-durasi', (durasi !== '-') ? `${durasi} hari` : '-');
+
+  // Mengambil Data Motor Terpilih
+  const motorValue = getVal('tipeMotoR');
+  const selectedMotor = unitMotor.find(m => m.id === motorValue);
+
+  if (selectedMotor) {
+    setText('review-motor', selectedMotor.nama);
+    
+    if (durasi !== '-') {
+      // Mengekstrak angka murni dari teks harga
+      const hargaPerHari = parseInt(selectedMotor.harga.replace(/[^0-9]/g, ''));
+      const total = hargaPerHari * parseInt(durasi);
+      const dp = Math.round(total * 0.2); // DP 20%
+      
+      setText('review-total', `Rp ${total.toLocaleString('id-ID')} (DP: Rp ${dp.toLocaleString('id-ID')})`);
+    }
+  } else {
+    setText('review-motor', '-');
+    setText('review-total', 'Rp 0');
+  }
+}
+
+// Event Listeners Global untuk mereset indikator error
+document.addEventListener('change', (e) => {
+  if (e.target.classList.contains('form-control') || e.target.classList.contains('form-select')) {
+    e.target.classList.remove('is-invalid');
+  }
+});
+document.addEventListener('input', (e) => {
+  if (e.target.classList.contains('form-control') || e.target.classList.contains('form-select')) {
+    e.target.classList.remove('is-invalid');
+  }
 });

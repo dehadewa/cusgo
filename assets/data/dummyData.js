@@ -333,32 +333,6 @@ export const footerData = [
 ];
 
 // --- DATA BOOKING ---
-export const bookingMotorPrices = {
-  'honda-vario': 80000,
-  'honda-pcx': 120000,
-  'yamaha-nmax': 130000,
-  'honda-beat': 70000,
-  'yamaha-fazzio': 90000,
-  'honda-stylo': 90000,
-  'honda-supra': 70000,
-  'honda-crf': 130000,
-  'honda-cbr150r': 150000,
-  'yamaha-mio': 90000
-};
-
-export const bookingMotorNames = {
-  'honda-vario': 'Honda Vario',
-  'honda-pcx': 'Honda PCX',
-  'yamaha-nmax': 'Yamaha NMAX',
-  'honda-beat': 'Honda Beat',
-  'yamaha-fazzio': 'Yamaha Fazzio',
-  'honda-stylo': 'Honda Stylo',
-  'honda-supra': 'Honda Supra',
-  'honda-crf': 'Honda CRF',
-  'honda-cbr150r': 'Honda CBR150R',
-  'yamaha-mio': 'Yamaha MIO ALL New'
-};
-
 export const paymentMethods = {
   'transfer-bank': '🏦 Transfer Bank',
   'kartu-kredit': '💳 Kartu Kredit',
