@@ -1,5 +1,5 @@
 /* ==========================================
-   1. IMPORT DATABASE LOKAL (Sudah Dibersihkan)
+   1. IMPORT DATABASE LOKAL
    ========================================== */
 import { 
   teamData, 
@@ -9,7 +9,7 @@ import {
   stepsData, 
   testimonialData, 
   paymentMethods,
-  destinasiWisata
+  destinasiWisata 
 } from '../data/dummyData.js';
 
 /* ==========================================
@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // --- D. RENDER DATA ANGGOTA TIM ---
+  // --- D. RENDER DATA ANGGOTA TIM (KHUSUS about.html) ---
   const teamContainer = document.getElementById("team-container");
   if (teamContainer) {
     let teamCardsHTML = "";
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
     teamContainer.innerHTML = teamCardsHTML;
   }
 
-  // --- E. RENDER DATA UNIT MOTOR ---
+  // --- E. RENDER DATA UNIT MOTOR (KHUSUS unit.html) ---
   const unitContainer = document.getElementById("unit-container");
   if (unitContainer) {
     let unitCardsHTML = "";
@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
     unitContainer.innerHTML = unitCardsHTML;
   }
 
-  // --- F. RENDER DATA BERANDA ---
+  // --- F. RENDER DATA BERANDA (KHUSUS index.html) ---
   const stats = document.getElementById("stats");
   if (stats) {
     let statsHTML = "";
@@ -206,7 +206,43 @@ document.addEventListener("DOMContentLoaded", () => {
     test.innerHTML = testHTML;
   }
 
-  // --- G. LOGIKA FORM KONTAK ---
+  // --- G. RENDER DATA DESTINASI (KHUSUS destinasi.html) ---
+  const destinasiContainer = document.getElementById("destinasi-container");
+  if (destinasiContainer) {
+    let destinasiHTML = "";
+    destinasiWisata.forEach((wisata) => {
+      destinasiHTML += `
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card card-hover h-100 border-0 overflow-hidden bg-white">
+            <img 
+              src="${wisata.img}" 
+              class="card-img-top" 
+              alt="${wisata.nama}" 
+              style="height: 220px; object-fit: cover; transition: transform 0.5s ease;"
+              onmouseover="this.style.transform='scale(1.05)'"
+              onmouseout="this.style.transform='scale(1)'"
+            >
+            <div class="card-body p-4 d-flex flex-column">
+              <h5 class="card-title fw-bold text-dark mb-2">${wisata.nama}</h5>
+              <p class="card-text text-secondary mb-4" style="font-size: 0.95rem;">${wisata.deskripsi}</p>
+              
+              <div class="mt-auto border-top pt-3">
+                <p class="text-dark fw-bold mb-1" style="color: var(--accent-color) !important;">
+                  <span class="text-secondary fw-normal fs-6">Tiket:</span> ${wisata.harga}
+                </p>
+                <p class="text-secondary small mb-0 fw-medium">
+                  📍 Jarak tempuh ${wisata.jarak} dari Pool Cusgo
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+    destinasiContainer.innerHTML = destinasiHTML;
+  }
+
+  // --- H. LOGIKA FORM KONTAK ---
   const contactForm = document.getElementById("contactForm");
   if (contactForm) {
     contactForm.addEventListener("submit", function (e) {
@@ -243,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // --- H. LOGIKA HALAMAN DETAIL UNIT DINAMIS ---
+  // --- I. LOGIKA HALAMAN DETAIL UNIT DINAMIS ---
   const detailContainer = document.getElementById("detail-unit-container");
   if (detailContainer) {
     const urlParams = new URLSearchParams(window.location.search);
@@ -323,16 +359,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // --- I. STEP-BY-STEP BOOKING FORM HANDLER ---
+  // --- J. STEP-BY-STEP BOOKING FORM HANDLER ---
   const bookingForm = document.getElementById('bookingForm');
   const motorSelect = document.getElementById('tipeMotoR');
   
-  // 1. OTOMATIS MENGISI DROPDOWN MOTOR DI FORM BOOKING
   if (motorSelect) {
     motorSelect.innerHTML = `<option value="" disabled selected>Pilih armada...</option>` + 
       unitMotor.map(motor => `<option value="${motor.id}">${motor.nama} - ${motor.harga}</option>`).join('');
 
-    // 2. TANGKAP PARAMETER ID DARI URL (Fitur Otomatis Pilih)
     const urlParamsBooking = new URLSearchParams(window.location.search);
     const preselectedMotor = urlParamsBooking.get('id');
     
@@ -377,31 +411,45 @@ document.addEventListener("DOMContentLoaded", () => {
           return;
         }
         
-        const formData = {
-          nama: document.getElementById('nama').value,
-          email: document.getElementById('email').value,
-          noTelepon: document.getElementById('noTelepon').value,
-          alamat: document.getElementById('alamat').value,
-          tanggalSewa: document.getElementById('tanggalSewa').value,
-          durasiSewa: document.getElementById('durasiSewa').value,
-          tipeMotoR: document.getElementById('tipeMotoR').value,
-          metodePembayaran: paymentMethod.value,
-          setujuKetentuan: document.getElementById('setujuKetentuan').checked
-        };
+        let toastContainer = document.getElementById('toast-container');
+        if (!toastContainer) {
+          toastContainer = document.createElement('div');
+          toastContainer.id = 'toast-container';
+          toastContainer.className = 'toast-container position-fixed top-0 end-0 p-4';
+          toastContainer.style.zIndex = '1055';
+          document.body.appendChild(toastContainer);
+        }
+
+        toastContainer.innerHTML = `
+          <div id="bookingToast" class="toast align-items-center text-bg-success border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+              <div class="toast-body fs-6 fw-medium px-3 py-3">
+                🎉 Pemesanan Berhasil! Tim kami akan segera menghubungi Anda.
+              </div>
+              <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast" aria-label="Tutup"></button>
+            </div>
+          </div>
+        `;
         
-        console.log('Data Pemesanan Berhasil:', formData);
-        alert('✅ Pemesanan berhasil dikirim!\n\nTim kami akan menghubungi Anda dalam 1x24 jam.');
+        if (typeof bootstrap !== 'undefined') {
+          const toastElement = document.getElementById('bookingToast');
+          const toast = new bootstrap.Toast(toastElement, { delay: 5000 });
+          toast.show();
+        } else {
+          alert('✅ Pemesanan berhasil dikirim!\n\nTim kami akan menghubungi Anda dalam 1x24 jam.');
+        }
+
         bookingForm.reset();
         currentStep = 1;
         updateSteps();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     });
     
-    // Inisialisasi tampilan form saat web dimuat
     updateSteps();
   }
 
-}); // <--- PENUTUP EVENT LISTENER UTAMA (TIDAK ADA LAGI YANG TERTINGGAL)
+}); // <--- PENUTUP EVENT LISTENER UTAMA (Semua fitur dibungkus aman di sini)
 
 
 /* ==============================================================
@@ -508,7 +556,6 @@ function updateReview() {
   const durasi = getVal('durasiSewa');
   setText('review-durasi', (durasi !== '-') ? `${durasi} hari` : '-');
 
-  // Mengambil Data Motor Terpilih
   const motorValue = getVal('tipeMotoR');
   const selectedMotor = unitMotor.find(m => m.id === motorValue);
 
@@ -516,7 +563,6 @@ function updateReview() {
     setText('review-motor', selectedMotor.nama);
     
     if (durasi !== '-') {
-      // Mengekstrak angka murni dari teks harga
       const hargaPerHari = parseInt(selectedMotor.harga.replace(/[^0-9]/g, ''));
       const total = hargaPerHari * parseInt(durasi);
       const dp = Math.round(total * 0.2); // DP 20%
@@ -529,7 +575,7 @@ function updateReview() {
   }
 }
 
-// Event Listeners Global untuk mereset indikator error
+// Event Listeners Global untuk Form
 document.addEventListener('change', (e) => {
   if (e.target.classList.contains('form-control') || e.target.classList.contains('form-select')) {
     e.target.classList.remove('is-invalid');
@@ -540,47 +586,3 @@ document.addEventListener('input', (e) => {
     e.target.classList.remove('is-invalid');
   }
 });
-
- /* ==========================================
-     9. RENDER DATA DESTINASI (KHUSUS destinasi.html)
-     ========================================== */
-  const destinasiContainer = document.getElementById("destinasi-container");
-
-  if (destinasiContainer) {
-    destinasiWisata.forEach((wisata) => {
-      destinasiContainer.innerHTML += `
-        <div class="col-md-6 col-lg-4">
-          <div class="card h-100 shadow-sm border-0">
-
-            <img
-              src="${wisata.img}"
-              class="card-img-top"
-              alt="${wisata.nama}"
-              style="height: 220px; object-fit: cover;"
-            >
-
-            <div class="card-body">
-
-              <h5 class="card-title fw-bold">
-                ${wisata.nama}
-              </h5>
-
-              <p class="card-text">
-                ${wisata.deskripsi}
-              </p>
-
-              <p class="text-success fw-semibold mb-1">
-                Tiket: ${wisata.harga}
-              </p>
-
-              <p class="text-muted mb-2">
-                📍 ${wisata.jarak} dari CusGo
-              </p>
-  </div>
-          </div>
-        </div>
-      `;
-    });
-  }
-});  
-              
