@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
               <h5 class="card-title fw-bold text-dark mb-1 fs-5">${unit.nama}</h5>
               <p class="card-text text-secondary fw-semibold mb-4">${unit.harga}</p>
               <div class="mt-auto d-flex gap-2">
-                <a href="detail-unit.html" class="btn btn-outline-secondary w-100 py-2 rounded-3 fw-bold border-2">Detail</a>
+                <a href="detail-unit.html?id=${unit.id}" class="btn btn-outline-secondary w-100 py-2 rounded-3 fw-bold border-2">Detail</a>
                 <a href="booking.html" class="btn btn-action w-100 py-2 rounded-3">Sewa</a>
               </div>
             </div>
@@ -477,4 +477,124 @@ document.addEventListener('input', (e) => {
   if (e.target.classList.contains('form-control') || e.target.classList.contains('form-select')) {
     e.target.classList.remove('is-invalid');
   }
+});
+
+  /* ==========================================
+     9. LOGIKA HALAMAN DETAIL UNIT DINAMIS
+     ========================================== */
+  const detailContainer = document.getElementById("detail-unit-container");
+  
+  if (detailContainer) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const motorId = urlParams.get('id');
+
+    const motorDetail = unitMotor.find(motor => motor.id === motorId);
+
+    if (motorDetail) {
+      // 1. Mapping fitur unggulan menjadi list HTML dengan ikon checkmark modern
+      const fiturHTML = motorDetail.fitur_unggulan.map(fitur => 
+        `<li class="mb-2 d-flex align-items-center text-secondary">
+          <span class="me-2 d-flex align-items-center justify-content-center bg-success bg-opacity-10 text-success rounded-circle" style="width: 24px; height: 24px; font-size: 12px;">✓</span> 
+          ${fitur}
+        </li>`
+      ).join('');
+
+      // 2. Mapping histori perjalanan menjadi tag/badge melengkung
+      const historiHTML = motorDetail.histori_perjalanan.map(rute => 
+        `<span class="badge bg-light text-secondary border px-3 py-2 rounded-pill fw-medium">${rute}</span>`
+      ).join('');
+
+      // 3. Cetak HTML dengan gaya UI Premium (Minimalist & Clean)
+      detailContainer.innerHTML = `
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden bg-white">
+          <div class="row g-0 align-items-stretch">
+            <!-- Sisi Kiri: Galeri / Gambar Motor -->
+            <div class="col-lg-5 p-5 text-center bg-light d-flex flex-column justify-content-center position-relative">
+              <img src="${motorDetail.img}" alt="${motorDetail.nama}" class="img-fluid position-relative" style="max-height: 380px; object-fit: contain; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15)); z-index: 1;">
+            </div>
+            
+            <!-- Sisi Kanan: Informasi Detail -->
+            <div class="col-lg-7 p-4 p-md-5">
+              <!-- Label Header -->
+              <div class="d-flex flex-wrap gap-2 mb-4">
+                <span class="badge bg-dark text-white px-3 py-2 rounded-pill fw-medium">${motorDetail.kategori}</span>
+                <span class="badge ${motorDetail.status === 'Tersedia' ? 'bg-success text-success border-success' : 'bg-danger text-danger border-danger'} bg-opacity-10 border border-opacity-25 px-3 py-2 rounded-pill fw-medium">
+                  • ${motorDetail.status}
+                </span>
+                <span class="badge bg-warning bg-opacity-10 text-dark border border-warning border-opacity-25 px-3 py-2 rounded-pill fw-medium">
+                  ⭐ ${motorDetail.rating} (${motorDetail.total_disewa} Trip)
+                </span>
+              </div>
+
+              <!-- Judul & Harga -->
+              <h2 class="fw-bolder text-dark mb-1" style="font-size: 2.2rem; letter-spacing: -1px;">${motorDetail.nama}</h2>
+              <h3 class="fw-bold mb-4" style="color: var(--accent-color); font-size: 1.6rem;">${motorDetail.harga}</h3>
+              
+              <!-- Deskripsi Singkat -->
+              <p class="text-secondary lh-lg mb-5">${motorDetail.deskripsi}</p>
+              
+              <!-- Grid Spesifikasi Teknis -->
+              <h6 class="fw-bold text-dark mb-3 text-uppercase fs-7" style="letter-spacing: 1px;">Spesifikasi Teknis</h6>
+              <div class="row g-3 mb-5 pb-4 border-bottom">
+                <div class="col-6 col-sm-4">
+                  <span class="d-block text-secondary small mb-1">Kapasitas Mesin</span>
+                  <strong class="text-dark">${motorDetail.spesifikasi.cc}</strong>
+                </div>
+                <div class="col-6 col-sm-4">
+                  <span class="d-block text-secondary small mb-1">Kapasitas Tangki</span>
+                  <strong class="text-dark">${motorDetail.spesifikasi.tangki}</strong>
+                </div>
+                <div class="col-6 col-sm-4">
+                  <span class="d-block text-secondary small mb-1">Ruang Bagasi</span>
+                  <strong class="text-dark">${motorDetail.spesifikasi.bagasi}</strong>
+                </div>
+                <div class="col-6 col-sm-4">
+                  <span class="d-block text-secondary small mb-1">Bahan Bakar</span>
+                  <strong class="text-dark">${motorDetail.spesifikasi.bensin}</strong>
+                </div>
+                <div class="col-6 col-sm-4">
+                  <span class="d-block text-secondary small mb-1">Tahun Rilis</span>
+                  <strong class="text-dark">${motorDetail.spesifikasi.tahun}</strong>
+                </div>
+                <div class="col-6 col-sm-4">
+                  <span class="d-block text-secondary small mb-1">Varian Warna</span>
+                  <strong class="text-dark">${motorDetail.spesifikasi.warna}</strong>
+                </div>
+              </div>
+
+              <!-- Fitur Utama & Histori -->
+              <div class="row g-4 mb-5">
+                <div class="col-md-6">
+                  <h6 class="fw-bold text-dark mb-3">Fitur Kendaraan</h6>
+                  <ul class="list-unstyled mb-0">
+                    ${fiturHTML}
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h6 class="fw-bold text-dark mb-3">Histori Rute Populer</h6>
+                  <div class="d-flex flex-wrap gap-2">
+                    ${historiHTML}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tombol Pesan (Pill Button) -->
+              <a href="booking.html?id=${motorDetail.id}" class="btn btn-action w-100 py-3 rounded-pill shadow-sm text-center fw-bold fs-6">Lanjutkan Pemesanan</a>
+            </div>
+          </div>
+        </div>
+      `;
+    } else {
+      detailContainer.innerHTML = `
+        <div class="text-center py-5">
+          <div class="display-1 text-muted mb-3">🔍</div>
+          <h2 class="fw-bold text-dark">Kendaraan Tidak Ditemukan</h2>
+          <p class="text-secondary mb-4">Maaf, armada yang Anda cari mungkin sedang tidak tersedia atau tautan tidak valid.</p>
+          <a href="unit.html" class="btn btn-action px-4 py-2 rounded-pill">Lihat Daftar Armada</a>
+        </div>
+      `;
+    }
+  }
+
+
 });
