@@ -155,3 +155,163 @@ body {
   border-color: var(--accent-color);
   box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
 }
+
+/* =========================================
+   5. STEP-BY-STEP BOOKING FORM
+   ========================================= */
+.step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+}
+
+.step-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: var(--bg-page);
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--text-light);
+  transition: all 0.3s ease;
+  margin-bottom: 8px;
+}
+
+.step-indicator.active .step-circle {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.step-indicator.completed .step-circle {
+  background-color: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.step-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-light);
+  text-align: center;
+  margin: 0;
+}
+
+.step-indicator.active .step-label {
+  color: var(--accent-color);
+  font-weight: 700;
+}
+
+.step-indicator.completed .step-label {
+  color: #10b981;
+}
+
+.step-line {
+  flex: 0.5;
+  height: 2px;
+  background-color: var(--border-color);
+  margin: 0 10px;
+  transition: all 0.3s ease;
+}
+
+.step-indicator.active ~ .step-line,
+.step-indicator.completed ~ .step-line {
+  background-color: var(--accent-color);
+}
+
+.step-content {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.step-content.active {
+  display: block;
+}
+
+@media (max-width: 576px) {
+  .step-indicator {
+    font-size: 0.75rem;
+  }
+  
+  .step-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+  
+  .step-line {
+    margin: 0 5px;
+  }
+}
+
+/* =========================================
+   6. PAYMENT METHODS STYLING
+   ========================================= */
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.payment-option {
+  position: relative;
+}
+
+.payment-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.payment-label {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: white;
+  margin: 0;
+}
+
+.payment-label:hover {
+  border-color: var(--accent-color);
+  background-color: #f8fafc;
+}
+
+.payment-option input[type="radio"]:checked + .payment-label {
+  border-color: var(--accent-color);
+  background-color: #eff6ff;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+.payment-icon {
+  font-size: 32px;
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+}
+
+.payment-info {
+  flex: 1;
+}
+
+.payment-info strong {
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.payment-info small {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-light);
+}

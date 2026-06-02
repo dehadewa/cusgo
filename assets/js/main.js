@@ -243,3 +243,269 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// ===================================
+// STEP-BY-STEP BOOKING FORM HANDLER
+// ===================================
+
+// Data harga motor
+const motorPrices = {
+  'honda-vario': 80000,
+  'honda-pcx': 120000,
+  'yamaha-nmax': 130000,
+  'honda-beat': 70000,
+  'yamaha-fazzio': 90000,
+  'honda-stylo': 90000,
+  'honda-supra': 70000,
+  'honda-crf': 130000,
+  'honda-cbr150r': 150000,
+  'yamaha-mio': 90000
+};
+
+// Nama motor untuk ditampilkan
+const motorNames = {
+  'honda-vario': 'Honda Vario',
+  'honda-pcx': 'Honda PCX',
+  'yamaha-nmax': 'Yamaha NMAX',
+  'honda-beat': 'Honda Beat',
+  'yamaha-fazzio': 'Yamaha Fazzio',
+  'honda-stylo': 'Honda Stylo',
+  'honda-supra': 'Honda Supra',
+  'honda-crf': 'Honda CRF',
+  'honda-cbr150r': 'Honda CBR150R',
+  'yamaha-mio': 'Yamaha MIO ALL New'
+};
+
+// Payment method labels
+const paymentMethodLabels = {
+  'transfer-bank': '🏦 Transfer Bank',
+  'kartu-kredit': '💳 Kartu Kredit',
+  'e-wallet': '📱 E-Wallet',
+  'tunai': '💰 Tunai di Tempat'
+};
+
+let currentStep = 1;
+const totalSteps = 3;
+
+// Initialize booking form
+document.addEventListener('DOMContentLoaded', () => {
+  const bookingForm = document.getElementById('bookingForm');
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const submitBtn = document.getElementById('submitBtn');
+
+  // Next button handler
+  if (nextBtn) {
+    nextBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      if (validateCurrentStep()) {
+        if (currentStep === 2) {
+          updateReview();
+        }
+        
+        if (currentStep < totalSteps) {
+          currentStep++;
+          updateSteps();
+        }
+      }
+    });
+  }
+
+  // Previous button handler
+  if (prevBtn) {
+    prevBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (currentStep > 1) {
+        currentStep--;
+        updateSteps();
+      }
+    });
+  }
+
+  // Form submit handler
+  if (bookingForm) {
+    bookingForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      if (validateCurrentStep()) {
+        // Get selected payment method
+        const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+        if (!paymentMethod) {
+          alert('⚠️ Pilih metode pembayaran terlebih dahulu!');
+          return;
+        }
+
+        // Simulasi pengiriman data
+        const formData = {
+          nama: document.getElementById('nama').value,
+          email: document.getElementById('email').value,
+          noTelepon: document.getElementById('noTelepon').value,
+          alamat: document.getElementById('alamat').value,
+          tanggalSewa: document.getElementById('tanggalSewa').value,
+          durasiSewa: document.getElementById('durasiSewa').value,
+          tipeMotoR: document.getElementById('tipeMotoR').value,
+          keperluan: document.getElementById('keperluan').value,
+          metodePembayaran: paymentMethod.value,
+          setujuKetentuan: document.getElementById('setujuKetentuan').checked
+        };
+
+        console.log('Data Pemesanan:', formData);
+        
+        // Tampilkan alert sukses
+        alert('✅ Pemesanan berhasil dikirim!\n\nTim kami akan menghubungi Anda dalam 1x24 jam.');
+        
+        // Reset form
+        bookingForm.reset();
+        currentStep = 1;
+        updateSteps();
+      }
+    });
+  }
+
+  // Update steps on page load
+  updateSteps();
+});
+
+// Validate current step
+function validateCurrentStep() {
+  const form = document.getElementById('bookingForm');
+  const currentStepContent = document.querySelector(`.step-content[step="${currentStep}"]`);
+  
+  if (!currentStepContent) return false;
+
+  // Get all required fields in current step
+  const requiredFields = currentStepContent.querySelectorAll('[required]');
+  
+  let isValid = true;
+  requiredFields.forEach(field => {
+    if (!field.value.trim()) {
+      field.classList.add('is-invalid');
+      isValid = false;
+    } else {
+      field.classList.remove('is-invalid');
+    }
+  });
+
+  // Validate email format if email field exists in current step
+  const emailField = currentStepContent.querySelector('#email');
+  if (emailField && emailField.value) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailField.value)) {
+      emailField.classList.add('is-invalid');
+      isValid = false;
+    }
+  }
+
+  // Validate payment method selection on step 3
+  if (currentStep === 3) {
+    const paymentMethodChecked = document.querySelector('input[name="paymentMethod"]:checked');
+    const setujuKetentuan = document.getElementById('setujuKetentuan').checked;
+    
+    if (!paymentMethodChecked) {
+      alert('⚠️ Pilih metode pembayaran terlebih dahulu!');
+      isValid = false;
+    }
+    
+    if (!setujuKetentuan) {
+      alert('⚠️ Anda harus menyetujui syarat dan ketentuan!');
+      isValid = false;
+    }
+  }
+
+  return isValid;
+}
+
+// Update step display
+function updateSteps() {
+  // Update step indicators
+  document.querySelectorAll('.step-indicator').forEach((indicator) => {
+    const step = parseInt(indicator.getAttribute('step'));
+    indicator.classList.remove('active', 'completed');
+    
+    if (step === currentStep) {
+      indicator.classList.add('active');
+    } else if (step < currentStep) {
+      indicator.classList.add('completed');
+    }
+  });
+
+  // Update step content
+  document.querySelectorAll('.step-content').forEach((content) => {
+    const step = parseInt(content.getAttribute('step'));
+    if (step === currentStep) {
+      content.style.display = 'block';
+      content.classList.add('active');
+    } else {
+      content.style.display = 'none';
+      content.classList.remove('active');
+    }
+  });
+
+  // Update button visibility
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+
+  if (currentStep === 1) {
+    prevBtn.style.display = 'none';
+    nextBtn.style.display = 'block';
+    submitBtn.style.display = 'none';
+  } else if (currentStep === totalSteps) {
+    prevBtn.style.display = 'block';
+    nextBtn.style.display = 'none';
+    submitBtn.style.display = 'block';
+  } else {
+    prevBtn.style.display = 'block';
+    nextBtn.style.display = 'block';
+    submitBtn.style.display = 'none';
+  }
+}
+
+// Update review data
+function updateReview() {
+  // Data Penyewa
+  document.getElementById('review-nama').textContent = document.getElementById('nama').value || '-';
+  document.getElementById('review-email').textContent = document.getElementById('email').value || '-';
+  document.getElementById('review-telepon').textContent = document.getElementById('noTelepon').value || '-';
+  document.getElementById('review-alamat').textContent = document.getElementById('alamat').value || '-';
+
+  // Data Penyewaan
+  const tanggal = document.getElementById('tanggalSewa').value;
+  const tanggalFormatted = tanggal ? new Date(tanggal).toLocaleDateString('id-ID', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  }) : '-';
+  document.getElementById('review-tanggal').textContent = tanggalFormatted;
+
+  const durasi = document.getElementById('durasiSewa').value;
+  document.getElementById('review-durasi').textContent = durasi ? `${durasi} hari` : '-';
+
+  const motorValue = document.getElementById('tipeMotoR').value;
+  const motorName = motorNames[motorValue] || '-';
+  document.getElementById('review-motor').textContent = motorName;
+
+  // Calculate total
+  if (motorValue && durasi) {
+    const hargaPerHari = motorPrices[motorValue];
+    const total = hargaPerHari * durasi;
+    const dp = Math.round(total * 0.2);
+    document.getElementById('review-total').textContent = `Rp ${total.toLocaleString('id-ID')} (DP: Rp ${dp.toLocaleString('id-ID')})`;
+  } else {
+    document.getElementById('review-total').textContent = 'Rp 0';
+  }
+}
+
+// Remove invalid class on input change
+document.addEventListener('change', (e) => {
+  if (e.target.classList.contains('form-control') || e.target.classList.contains('form-select')) {
+    e.target.classList.remove('is-invalid');
+  }
+});
+
+document.addEventListener('input', (e) => {
+  if (e.target.classList.contains('form-control') || e.target.classList.contains('form-select')) {
+    e.target.classList.remove('is-invalid');
+  }
+});
