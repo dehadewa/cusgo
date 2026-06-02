@@ -377,3 +377,10 @@ export const destinasiWisata = [
     img: "/assets/images/wisata/tambakrejo.png"
   }
 ];
+// --- DATA BOOKING ---
+export const paymentMethods = {
+  'transfer-bank': '🏦 Transfer Bank',
+  'kartu-kredit': '💳 Kartu Kredit',
+  'e-wallet': '📱 E-Wallet',
+  'tunai': '💰 Tunai di Tempat'
+};
