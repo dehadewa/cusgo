@@ -43,7 +43,6 @@ export const teamData = [
 ];
 
 // --- DATA UNIT MOTOR ---
-// --- DATA UNIT MOTOR ---
 export const unitMotor = [
   { 
     id: "vario",

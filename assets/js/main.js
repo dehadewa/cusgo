@@ -1,15 +1,15 @@
 /* ==========================================
    1. IMPORT DATABASE LOKAL
    ========================================== */
-import { 
-  teamData, 
-  unitMotor, 
-  statsData, 
-  featureData, 
-  stepsData, 
-  testimonialData, 
+import {
+  teamData,
+  unitMotor,
+  statsData,
+  featureData,
+  stepsData,
+  testimonialData,
   paymentMethods,
-  destinasiWisata 
+  destinasiWisata
 } from '../data/dummyData.js';
 
 /* ==========================================
@@ -22,13 +22,13 @@ const totalSteps = 3;
    3. EVENT UTAMA: KETIKA HALAMAN SELESAI DIMUAT
    ========================================== */
 document.addEventListener("DOMContentLoaded", () => {
-  
+
   // --- A. RENDER HEADER (NAVBAR BOOTSTRAP) ---
   const headerHTML = `
     <nav class="navbar navbar-expand-lg navbar-cusgo sticky-top fade-in">
       <div class="container">
         <a class="navbar-brand logo-text" href="index.html">Cusgo<span>.</span></a>
-        
+
         <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -423,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
         toastContainer.innerHTML = `
           <div id="bookingToast" class="toast align-items-center text-bg-success border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
-              <div class="toast-body fs-6 fw-medium px-3 py-3">
+              <div class="toast-body fs-10 fw-medium px-3 py-3">
                 🎉 Pemesanan Berhasil! Tim kami akan segera menghubungi Anda.
               </div>
               <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast" aria-label="Tutup"></button>
@@ -449,7 +449,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSteps();
   }
 
-}); // <--- PENUTUP EVENT LISTENER UTAMA (Semua fitur dibungkus aman di sini)
+});
 
 
 /* ==============================================================

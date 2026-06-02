@@ -26,7 +26,6 @@ body {
 /* =========================================
    3. KUSTOMISASI NAVBAR BOOTSTRAP
    ========================================= */
-/* Memberikan efek border dan shadow khas Cusgo ke navbar Bootstrap */
 .navbar-cusgo {
   background-color: var(--bg-white);
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -47,15 +46,13 @@ body {
 /* Transisi warna dan properti dasar */
 .nav-link-custom {
   color: var(--text-light) !important;
-  font-weight: 500; /* Ketebalan awal tetap dipertahankan */
+  font-weight: 500; 
   position: relative;
   transition: all 0.3s ease;
 }
 
 .nav-link-custom:hover, .nav-link-custom.active {
   color: var(--text-dark) !important;
-  /* HAPUS font-weight: 700 di sini */
-  /* GUNAKAN TRIK INI: Membuat efek tebal tanpa mengubah lebar asli teks */
   -webkit-text-stroke: 0.5px var(--text-dark);
 }
 
@@ -89,7 +86,6 @@ body {
 /* =========================================
    4. KUSTOMISASI KARTU BOOTSTRAP (Shadow & Hover)
    ========================================= */
-/* Kita buat class tambahan untuk disematkan di .card Bootstrap */
 .card-hover {
   border-radius: 16px;
   border: 1px solid var(--border-color);
@@ -100,7 +96,7 @@ body {
 .card-hover:hover {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
   border-color: var(--accent-color);
-  transform: translateY(-5px); /* Efek ngambang ke atas */
+  transform: translateY(-5px);
 }
 
 /* =========================================
@@ -123,7 +119,6 @@ body {
   margin-top: 1rem;
 }
 
-/* Identitas warna tombol custom (menimpa default Bootstrap jika diperlukan) */
 .btn-action {
   background-color: var(--primary-color);
   color: white;
@@ -150,7 +145,6 @@ body {
   font-weight: 500;
 }
 
-/* Modifikasi input form agar saat di-klik warnanya sesuai accent-color Cusgo */
 .form-control:focus, .form-select:focus {
   border-color: var(--accent-color);
   box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
