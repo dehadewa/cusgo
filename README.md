@@ -1,5 +1,4 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/FirmanSyah2078/cusgo/main/img/logo-placeholder.png" alt="Cusgo Logo" width="120" height="auto" />
   <h1>Cusgo<span>.</span></h1>
   <p><strong>Solusi Rental Motor Modern, Cepat, dan Terpercaya</strong></p>
   
