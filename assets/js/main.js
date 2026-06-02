@@ -1,7 +1,7 @@
 /* ==========================================
    1. IMPORT DATABASE LOKAL
    ========================================== */
-import { teamData, unitMotor, statsData, featureData, stepsData, testimonialData } from '../data/dummyData.js';
+import { teamData, unitMotor, statsData, featureData, stepsData, testimonialData, destinasiWisata } from '../data/dummyData.js';
 
 document.addEventListener("DOMContentLoaded", () => {
   /* ==========================================
@@ -240,6 +240,349 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       
       contactForm.reset(); 
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  /* ==========================================
+     9. RENDER DATA DESTINASI (KHUSUS destinasi.html)
+     ========================================== */
+  const destinasiContainer = document.getElementById("destinasi-container");
+
+  if (destinasiContainer) {
+    destinasiWisata.forEach((wisata) => {
+      destinasiContainer.innerHTML += `
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm border-0">
+
+            <img
+              src="${wisata.img}"
+              class="card-img-top"
+              alt="${wisata.nama}"
+              style="height: 220px; object-fit: cover;"
+            >
+
+            <div class="card-body">
+
+              <h5 class="card-title fw-bold">
+                ${wisata.nama}
+              </h5>
+
+              <p class="card-text">
+                ${wisata.deskripsi}
+              </p>
+
+              <p class="text-success fw-semibold mb-1">
+                Tiket: ${wisata.harga}
+              </p>
+
+              <p class="text-muted mb-2">
+                📍 ${wisata.jarak} dari CusGo
+              </p>
+
+            </div>
+          </div>
+        </div>
+      `;
     });
   }
 });

@@ -90,3 +90,301 @@ export const footerData = [
   { name: "Kontak", link: "contact.html" },
   { name: "Syarat & Ketentuan", link: "agreement.html" }
 ];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// --- DATA DESTINASI WISATA ---
+export const destinasiWisata = [
+  {
+    nama: "Makam Bung Karno",
+    harga: "Gratis",
+    jarak: "2 km",
+    deskripsi: "Wisata sejarah dan religi yang menjadi tempat peristirahatan Presiden pertama Republik Indonesia, Ir. Soekarno.",
+    img: "/assets/images/wisata/makambungkarno.png"
+  },
+  {
+    nama: "Kampung Coklat",
+    harga: "Rp 15.000/orang",
+    jarak: "10.5 km",
+    deskripsi: "Wisata edukasi keluarga yang menawarkan pengalaman belajar pengolahan cokelat dan berbagai kuliner berbahan cokelat.",
+    img: "/assets/images/wisata/kampungcoklat.png"
+  },
+  {
+    nama: "Istana Gebang",
+    harga: "Rp 5.000/orang",
+    jarak: "3 km",
+    deskripsi: "Rumah masa kecil Bung Karno yang kini menjadi museum sejarah dan destinasi edukasi budaya.",
+    img: "/assets/images/wisata/istanagebang.png"
+  },
+  {
+    nama: "Blitar Park",
+    harga: "Rp 40.000/orang",
+    jarak: "7 km",
+    deskripsi: "Taman rekreasi keluarga dengan berbagai wahana permainan, spot foto, dan area hiburan modern.",
+    img: "/assets/images/wisata/blitarpark.png"
+  },
+  {
+    nama: "Candi Penataran",
+    harga: "Rp 10.000/orang",
+    jarak: "12 km",
+    deskripsi: "Kompleks candi Hindu terbesar di Jawa Timur yang menyimpan banyak peninggalan sejarah Kerajaan Majapahit.",
+    img: "/assets/images/wisata/candipenataran.png"
+  },
+  {
+    nama: "Pantai Tambakrejo",
+    harga: "Rp 15.000/orang",
+    jarak: "35 km",
+    deskripsi: "Pantai populer di Blitar Selatan dengan panorama laut yang indah serta pusat kuliner seafood segar.",
+    img: "/assets/images/wisata/tambakrejo.png"
+  }
+];
