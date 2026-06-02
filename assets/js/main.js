@@ -1,11 +1,14 @@
-//    1. IMPORT DATABASE LOKAL
+/* ==========================================
+   1. IMPORT DATABASE LOKAL
+   ========================================== */
 import { teamData, unitMotor, statsData, featureData, stepsData, testimonialData } from '../data/dummyData.js';
 
 document.addEventListener("DOMContentLoaded", () => {
-
-    //  2. RENDER HEADER (NAVBAR BOOTSTRAP)
+  /* ==========================================
+     2. RENDER HEADER (NAVBAR BOOTSTRAP)
+     ========================================== */
   const headerHTML = `
-    <nav class="navbar navbar-expand-md navbar-cusgo sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-cusgo sticky-top fade-in">
       <div class="container">
         <a class="navbar-brand logo-text" href="index.html">Cusgo<span>.</span></a>
         
@@ -14,9 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
         </button>
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul class="navbar-nav gap-2 gap-md-4 text-center mt-3 mt-md-0 pb-3 pb-md-0">
+          <ul class="navbar-nav gap-2 gap-lg-4 text-center mt-3 mt-lg-0 pb-3 pb-lg-0">
             <li class="nav-item"><a class="nav-link nav-link-custom" href="index.html">Beranda</a></li>
             <li class="nav-item"><a class="nav-link nav-link-custom" href="unit.html">Unit</a></li>
+            <li class="nav-item"><a class="nav-link nav-link-custom" href="destinasi.html">Destinasi</a></li>
+            <li class="nav-item"><a class="nav-link nav-link-custom" href="booking.html">Pemesanan</a></li>
             <li class="nav-item"><a class="nav-link nav-link-custom" href="about.html">Tentang</a></li>
             <li class="nav-item"><a class="nav-link nav-link-custom" href="agreement.html">Perjanjian</a></li>
             <li class="nav-item"><a class="nav-link nav-link-custom" href="contact.html">Kontak</a></li>
@@ -26,7 +31,9 @@ document.addEventListener("DOMContentLoaded", () => {
     </nav>
   `;
 
-  //  3. RENDER FOOTER BOOTSTRAP
+  /* ==========================================
+     3. RENDER FOOTER BOOTSTRAP
+     ========================================== */
   const footerHTML = `
     <footer class="bg-white border-top mt-5 pt-5 pb-4">
       <div class="container">
@@ -37,8 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
           <div class="col-md-6 d-flex flex-wrap justify-content-center justify-content-md-end gap-3 gap-md-4">
             <a href="unit.html" class="text-decoration-none text-secondary fw-medium">Armada</a>
+            <a href="destinasi.html" class="text-decoration-none text-secondary fw-medium">Destinasi</a>
+            <a href="booking.html" class="text-decoration-none text-secondary fw-medium">Pemesanan</a>
             <a href="contact.html" class="text-decoration-none text-secondary fw-medium">Kontak</a>
-            <a href="agreement.html" class="text-decoration-none text-secondary fw-medium">Syarat & Ketentuan</a>
           </div>
         </div>
         <div class="text-center pt-4 border-top">
@@ -55,7 +63,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (headerContainer) headerContainer.outerHTML = headerHTML;
   if (footerContainer) footerContainer.outerHTML = footerHTML;
 
-  //  4. SET MENU ACTIVE SECARA DINAMIS
+  /* ==========================================
+     4. SET MENU ACTIVE SECARA DINAMIS
+     ========================================== */
   const currentLocation = window.location.pathname.split("/").pop() || "index.html";
   const navLinks = document.querySelectorAll(".nav-link-custom");
 
@@ -65,7 +75,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  //  5. RENDER DATA ANGGOTA TIM (KHUSUS about.html)
+  /* ==========================================
+     5. RENDER DATA ANGGOTA TIM (KHUSUS about.html)
+     ========================================== */
   const teamContainer = document.getElementById("team-container");
   if (teamContainer) {
     let teamCardsHTML = "";
@@ -92,7 +104,9 @@ document.addEventListener("DOMContentLoaded", () => {
     teamContainer.innerHTML = teamCardsHTML;
   }
 
-    //  6. RENDER DATA UNIT MOTOR (KHUSUS unit.html)
+  /* ==========================================
+     6. RENDER DATA UNIT MOTOR (KHUSUS unit.html)
+     ========================================== */
   const unitContainer = document.getElementById("unit-container");
   if (unitContainer) {
     let unitCardsHTML = "";
@@ -104,7 +118,10 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="card-body d-flex flex-column p-0 mt-3">
               <h5 class="card-title fw-bold text-dark mb-1 fs-5">${unit.nama}</h5>
               <p class="card-text text-secondary fw-semibold mb-4">${unit.harga}</p>
-              <button class="btn btn-action w-100 py-2 rounded-3 mt-auto">Sewa Sekarang</button>
+              <div class="mt-auto d-flex gap-2">
+                <a href="detail-unit.html" class="btn btn-outline-secondary w-100 py-2 rounded-3 fw-bold border-2">Detail</a>
+                <a href="booking.html" class="btn btn-action w-100 py-2 rounded-3">Sewa</a>
+              </div>
             </div>
           </div>
         </div>
@@ -113,7 +130,9 @@ document.addEventListener("DOMContentLoaded", () => {
     unitContainer.innerHTML = unitCardsHTML;
   }
 
-    //  7. RENDER DATA BERANDA (KHUSUS index.html)
+  /* ==========================================
+     7. RENDER DATA BERANDA (KHUSUS index.html)
+     ========================================== */
   const stats = document.getElementById("stats");
   if (stats) {
     let statsHTML = "";
@@ -180,27 +199,24 @@ document.addEventListener("DOMContentLoaded", () => {
     test.innerHTML = testHTML;
   }
 
-    //  8. LOGIKA FORM KONTAK (NOTIFIKASI TOAST MODERN)
+  /* ==========================================
+     8. LOGIKA FORM KONTAK (NOTIFIKASI TOAST MODERN)
+     ========================================== */
   const contactForm = document.getElementById("contactForm");
   
   if (contactForm) {
     contactForm.addEventListener("submit", function (e) {
-      // 1. Mencegah halaman refresh
       e.preventDefault(); 
       
-      // 2. Cek apakah wadah notifikasi (Toast Container) sudah ada di HTML.
-      // Jika belum, kita buat elemennya langsung via JavaScript di pojok kanan atas (top-0 end-0)
       let toastContainer = document.getElementById('toast-container');
       if (!toastContainer) {
         toastContainer = document.createElement('div');
         toastContainer.id = 'toast-container';
-        // Class Bootstrap untuk memposisikan di pojok kanan atas agar melayang
         toastContainer.className = 'toast-container position-fixed top-0 end-0 p-4';
-        toastContainer.style.zIndex = '1055'; // Agar berada di atas Navbar
+        toastContainer.style.zIndex = '1055';
         document.body.appendChild(toastContainer);
       }
 
-      // 3. Kita suntikkan desain Toast-nya dengan warna tema Cusgo (atau warna hijau sukses)
       toastContainer.innerHTML = `
         <div id="contactToast" class="toast align-items-center text-bg-success border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
           <div class="d-flex">
@@ -212,16 +228,18 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
       
-      // 4. Panggil Bootstrap untuk "menghidupkan" dan memunculkan Toast tersebut
-      const toastElement = document.getElementById('contactToast');
-      const toast = new bootstrap.Toast(toastElement, {
-        delay: 4000 // Notifikasi akan hilang otomatis setelah 4 detik
-      });
-      toast.show();
+      // Jika Bootstrap ESM tidak dipanggil di script ini, pastikan bootstrap.bundle.min.js ter-load di HTML
+      if (typeof bootstrap !== 'undefined') {
+        const toastElement = document.getElementById('contactToast');
+        const toast = new bootstrap.Toast(toastElement, {
+          delay: 4000
+        });
+        toast.show();
+      } else {
+        alert("Terima kasih telah menghubungi kami! Pesan Anda segera kami balas."); // Fallback aman
+      }
       
-      // 5. Kosongkan kembali form
       contactForm.reset(); 
     });
   }
-
 });

@@ -44,32 +44,46 @@ body {
   color: var(--accent-color);
 }
 
-/* Mempertahankan animasi garis bawah (underline) saat di-hover */
+/* Transisi warna dan properti dasar */
 .nav-link-custom {
   color: var(--text-light) !important;
-  font-weight: 500;
+  font-weight: 500; /* Ketebalan awal tetap dipertahankan */
   position: relative;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .nav-link-custom:hover, .nav-link-custom.active {
   color: var(--text-dark) !important;
-  font-weight: 700;
+  /* HAPUS font-weight: 700 di sini */
+  /* GUNAKAN TRIK INI: Membuat efek tebal tanpa mengubah lebar asli teks */
+  -webkit-text-stroke: 0.5px var(--text-dark);
 }
 
+/* Animasi Underline Smooth (Transform Scale) */
 .nav-link-custom::after {
   content: '';
   position: absolute;
-  width: 0;
+  width: calc(100% - 16px);
   height: 2px;
   bottom: 0;
-  left: 8px; /* Disesuaikan dengan padding bawaan Bootstrap */
+  left: 8px;
   background-color: var(--text-dark);
-  transition: width 0.3s ease-in-out;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease-in-out;
 }
 
 .nav-link-custom:hover::after, .nav-link-custom.active::after {
-  width: calc(100% - 16px);
+  transform: scaleX(1);
+}
+
+/* Animasi Fade In */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
 }
 
 /* =========================================
