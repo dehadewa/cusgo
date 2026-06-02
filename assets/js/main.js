@@ -1,7 +1,7 @@
 /* ==========================================
    1. IMPORT DATABASE LOKAL
    ========================================== */
-import { teamData, unitMotor, statsData, featureData, stepsData, testimonialData } from '../data/dummyData.js';
+import { teamData, unitMotor, statsData, featureData, stepsData, testimonialData, bookingMotorPrices, bookingMotorNames, paymentMethods } from '../data/dummyData.js';
 
 document.addEventListener("DOMContentLoaded", () => {
   /* ==========================================
@@ -248,41 +248,10 @@ document.addEventListener("DOMContentLoaded", () => {
 // STEP-BY-STEP BOOKING FORM HANDLER
 // ===================================
 
-// Data harga motor
-const motorPrices = {
-  'honda-vario': 80000,
-  'honda-pcx': 120000,
-  'yamaha-nmax': 130000,
-  'honda-beat': 70000,
-  'yamaha-fazzio': 90000,
-  'honda-stylo': 90000,
-  'honda-supra': 70000,
-  'honda-crf': 130000,
-  'honda-cbr150r': 150000,
-  'yamaha-mio': 90000
-};
-
-// Nama motor untuk ditampilkan
-const motorNames = {
-  'honda-vario': 'Honda Vario',
-  'honda-pcx': 'Honda PCX',
-  'yamaha-nmax': 'Yamaha NMAX',
-  'honda-beat': 'Honda Beat',
-  'yamaha-fazzio': 'Yamaha Fazzio',
-  'honda-stylo': 'Honda Stylo',
-  'honda-supra': 'Honda Supra',
-  'honda-crf': 'Honda CRF',
-  'honda-cbr150r': 'Honda CBR150R',
-  'yamaha-mio': 'Yamaha MIO ALL New'
-};
-
-// Payment method labels
-const paymentMethodLabels = {
-  'transfer-bank': '🏦 Transfer Bank',
-  'kartu-kredit': '💳 Kartu Kredit',
-  'e-wallet': '📱 E-Wallet',
-  'tunai': '💰 Tunai di Tempat'
-};
+// Alias untuk kemudahan penggunaan
+const motorPrices = bookingMotorPrices;
+const motorNames = bookingMotorNames;
+const paymentMethodLabels = paymentMethods;
 
 let currentStep = 1;
 const totalSteps = 3;
