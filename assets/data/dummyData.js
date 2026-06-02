@@ -43,17 +43,258 @@ export const teamData = [
 ];
 
 // --- DATA UNIT MOTOR ---
+// --- DATA UNIT MOTOR ---
 export const unitMotor = [
-  { nama: "Honda Vario", harga: "Rp 80.000/hari", img: "./assets/images/motor/vario.png" },
-  { nama: "Honda PCX", harga: "Rp 120.000/hari", img: "./assets/images/motor/pcx.png" },
-  { nama: "Yamaha NMAX", harga: "Rp 130.000/hari", img: "./assets/images/motor/nmax.png" },
-  { nama: "Honda Beat", harga: "Rp 70.000/hari", img: "./assets/images/motor/beat.png" },
-  { nama: "Yamaha Fazzio", harga: "Rp 90.000/hari", img: "./assets/images/motor/fazzio.png" },
-  { nama: "Honda Stylo", harga: "Rp 90.000/hari", img: "./assets/images/motor/stylo.png" },
-  { nama: "Honda Supra", harga: "Rp 70.000/hari", img: "./assets/images/motor/supra.png" },
-  { nama: "Honda CRF", harga: "Rp 130.000/hari", img: "./assets/images/motor/crf.png" },
-  { nama: "Honda CBR150R", harga: "Rp 150.000/hari", img: "./assets/images/motor/cbr150r.png" },
-  { nama: "Yamaha MIO ALL New", harga: "Rp 90.000/hari", img: "./assets/images/motor/mio.png" },
+  { 
+    id: "vario",
+    nama: "Honda Vario 125", 
+    kategori: "Matic Standar", 
+    status: "Tersedia",
+    harga: "Rp 80.000/hari", 
+    img: "./assets/images/motor/vario.png",
+    deskripsi: "Motor matic andalan dengan performa gesit, sangat cocok untuk keliling kota dengan nyaman dan irit bensin. Memiliki ruang pijakan kaki yang luas.",
+    spesifikasi: { 
+      cc: "125 cc", 
+      bensin: "Injeksi (PGM-FI)",
+      tangki: "5.5 Liter",
+      bagasi: "18 Liter (Muat Helm)",
+      tahun: "2023",
+      warna: "Matte Black"
+    },
+    fitur_unggulan: [
+      "Lampu Full LED",
+      "USB Charger",
+      "Idling Stop System (ISS)"
+    ],
+    rating: 4.8,
+    total_disewa: 87,
+    histori_perjalanan: ["Makam Bung Karno", "Candi Penataran", "Pusat Kota Blitar"]
+  },
+  { 
+    id: "pcx", 
+    nama: "Honda PCX 160", 
+    kategori: "Matic Premium",
+    status: "Tersedia",
+    harga: "Rp 120.000/hari", 
+    img: "./assets/images/motor/pcx.png",
+    deskripsi: "Skutik premium dengan posisi berkendara super nyaman. Pilihan tepat untuk perjalanan jauh atau touring santai melintasi rute antar kota.",
+    spesifikasi: { 
+      cc: "160 cc", 
+      bensin: "Injeksi (PGM-FI)",
+      tangki: "8.1 Liter",
+      bagasi: "30 Liter",
+      tahun: "2024",
+      warna: "Majestic Matte Red"
+    },
+    fitur_unggulan: [
+      "Honda Smart Key System (Keyless)",
+      "Rem ABS (Anti-lock Braking System)",
+      "Digital Panel Meter"
+    ],
+    rating: 4.9,
+    total_disewa: 52,
+    histori_perjalanan: ["Pantai Tambakrejo", "Jalur Lintas Selatan (JLS)", "Malang - Blitar"]
+  },
+  { 
+    id: "nmax", 
+    nama: "Yamaha NMAX 155", 
+    kategori: "Matic Premium",
+    status: "Tersedia",
+    harga: "Rp 130.000/hari", 
+    img: "./assets/images/motor/nmax.png",
+    deskripsi: "Raja jalanan untuk kenyamanan maksimal. Suspensinya empuk dan tarikan mesin VVA-nya sangat bertenaga di tanjakan.",
+    spesifikasi: { 
+      cc: "155 cc", 
+      bensin: "Injeksi (Blue Core)",
+      tangki: "7.1 Liter",
+      bagasi: "23.3 Liter",
+      tahun: "2023",
+      warna: "Maxi Signature Black"
+    },
+    fitur_unggulan: [
+      "Teknologi VVA (Variable Valve Actuation)",
+      "Rem ABS Dual Channel",
+      "Traction Control System"
+    ],
+    rating: 4.9,
+    total_disewa: 64,
+    histori_perjalanan: ["Gunung Kelud", "Pantai Pangi", "Tulungagung - Blitar"]
+  },
+  { 
+    id: "beat", 
+    nama: "Honda Beat", 
+    kategori: "Matic Standar",
+    status: "Tersedia",
+    harga: "Rp 70.000/hari", 
+    img: "./assets/images/motor/beat.png",
+    deskripsi: "Lincah, ringan, dan sangat irit. Pilihan paling pas untuk menembus kemacetan atau sekadar jalan-jalan santai mencari kuliner.",
+    spesifikasi: { 
+      cc: "110 cc", 
+      bensin: "Injeksi (PGM-FI)",
+      tangki: "4.2 Liter",
+      bagasi: "12 Liter",
+      tahun: "2024",
+      warna: "Deluxe Blue"
+    },
+    fitur_unggulan: [
+      "Rangka eSAF (Ringan & Lincah)",
+      "Power Charger",
+      "Combi Brake System"
+    ],
+    rating: 4.7,
+    total_disewa: 112,
+    histori_perjalanan: ["Alun-Alun Blitar", "Kampung Coklat", "Blitar Park"]
+  },
+  { 
+    id: "fazzio", 
+    nama: "Yamaha Fazzio", 
+    kategori: "Matic Klasik",
+    status: "Tersedia",
+    harga: "Rp 90.000/hari", 
+    img: "./assets/images/motor/fazzio.png",
+    deskripsi: "Tampil gaya dengan desain retro modern. Dilengkapi mesin hybrid yang membuatnya semakin ramah lingkungan dan hemat bahan bakar.",
+    spesifikasi: { 
+      cc: "125 cc", 
+      bensin: "Hybrid (Blue Core)",
+      tangki: "5.1 Liter",
+      bagasi: "17.8 Liter",
+      tahun: "2024",
+      warna: "Cyan"
+    },
+    fitur_unggulan: [
+      "Mesin Hybrid Power Assist",
+      "Y-Connect (Koneksi Smartphone)",
+      "Smart Key System"
+    ],
+    rating: 4.8,
+    total_disewa: 43,
+    histori_perjalanan: ["Istana Gebang", "Cafe-cafe Hits Blitar", "Kebon Rojo"]
+  },
+  { 
+    id: "stylo", 
+    nama: "Honda Stylo 160", 
+    kategori: "Matic Klasik",
+    status: "Tersedia",
+    harga: "Rp 90.000/hari", 
+    img: "./assets/images/motor/stylo.png",
+    deskripsi: "Perpaduan sempurna antara desain fashionable klasik dengan tenaga mesin 160cc yang buas. Sangat *aesthetic* untuk difoto.",
+    spesifikasi: { 
+      cc: "160 cc", 
+      bensin: "Injeksi (PGM-FI)",
+      tangki: "5 Liter",
+      bagasi: "16.5 Liter",
+      tahun: "2024",
+      warna: "Royal Green"
+    },
+    fitur_unggulan: [
+      "Desain Retro Modern",
+      "Mesin eSP+ 4 Katup",
+      "Full Digital Panel Meter"
+    ],
+    rating: 4.9,
+    total_disewa: 38,
+    histori_perjalanan: ["Candi Penataran", "Pantai Serang", "Pusat Kota"]
+  },
+  { 
+    id: "supra", 
+    nama: "Honda Supra X 125", 
+    kategori: "Bebek (Manual)",
+    status: "Tersedia",
+    harga: "Rp 70.000/hari", 
+    img: "./assets/images/motor/supra.png",
+    deskripsi: "Legenda irit yang tak lekang oleh waktu. Tangguh menaklukkan berbagai medan jalan dengan konsumsi bahan bakar yang sangat efisien.",
+    spesifikasi: { 
+      cc: "125 cc", 
+      bensin: "Injeksi (PGM-FI)",
+      tangki: "4 Liter",
+      bagasi: "7 Liter",
+      tahun: "2022",
+      warna: "Energetic Red"
+    },
+    fitur_unggulan: [
+      "Sistem Injeksi Super Irit",
+      "Rem Cakram Ganda",
+      "Mesin Tangguh Jangka Panjang"
+    ],
+    rating: 4.6,
+    total_disewa: 67,
+    histori_perjalanan: ["Wlingi", "Rute Pedesaan Blitar", "Pasar Legi"]
+  },
+  { 
+    id: "crf", 
+    nama: "Honda CRF 150L", 
+    kategori: "Sport/Trail",
+    status: "Tersedia",
+    harga: "Rp 130.000/hari", 
+    img: "./assets/images/motor/crf.png",
+    deskripsi: "Siap diajak berpetualang ke alam bebas! Suspensi *upside down* dan ban paculnya membuat jalanan berlubang atau tanah berlumpur bukan masalah.",
+    spesifikasi: { 
+      cc: "150 cc", 
+      bensin: "Injeksi (PGM-FI)",
+      tangki: "7.2 Liter",
+      bagasi: "Tidak Ada",
+      tahun: "2023",
+      warna: "Extreme Red"
+    },
+    fitur_unggulan: [
+      "Suspensi Depan Inverted (Upside Down)",
+      "Ban Dual Purpose",
+      "Digital Panel Meter"
+    ],
+    rating: 4.8,
+    total_disewa: 29,
+    histori_perjalanan: ["Perkebunan Teh Sirah Kencong", "Jalur Lereng Kelud", "Hutan Pinus Loji"]
+  },
+  { 
+    id: "cbr150r", 
+    nama: "Honda CBR150R", 
+    kategori: "Sport/Kopling",
+    status: "Tersedia",
+    harga: "Rp 150.000/hari", 
+    img: "./assets/images/motor/cbr150r.png",
+    deskripsi: "Motor sport dengan aura *racing* yang kental. Sangat stabil di kecepatan tinggi dan memiliki posisi riding yang agresif.",
+    spesifikasi: { 
+      cc: "150 cc", 
+      bensin: "Injeksi (PGM-FI)",
+      tangki: "12 Liter",
+      bagasi: "Tidak Ada",
+      tahun: "2023",
+      warna: "Racing Red"
+    },
+    fitur_unggulan: [
+      "Assist/Slipper Clutch",
+      "Inverted Front Suspension",
+      "Desain Aerodinamis"
+    ],
+    rating: 4.7,
+    total_disewa: 21,
+    histori_perjalanan: ["JLS (Jalur Lintas Selatan)", "Touring Antar Kota", "Blitar - Kediri"]
+  },
+  { 
+    id: "mio", 
+    nama: "Yamaha Mio M3", 
+    kategori: "Matic Standar",
+    status: "Tersedia",
+    harga: "Rp 90.000/hari", 
+    img: "./assets/images/motor/mio.png",
+    deskripsi: "Pilihan kompak dan praktis untuk mobilitas harian. Tarikannya responsif dan sangat mudah dikendalikan di gang-gang sempit.",
+    spesifikasi: { 
+      cc: "125 cc", 
+      bensin: "Injeksi (Blue Core)",
+      tangki: "4.2 Liter",
+      bagasi: "10.1 Liter",
+      tahun: "2023",
+      warna: "Metallic Yellow"
+    },
+    fitur_unggulan: [
+      "Eco Indicator",
+      "Smart Lock System",
+      "Mesin Blue Core 125cc"
+    ],
+    rating: 4.5,
+    total_disewa: 94,
+    histori_perjalanan: ["Stasiun Blitar", "Alun-Alun", "Pusat Oleh-oleh"]
+  }
 ];
 
 // --- DATA STATISTIK ---
